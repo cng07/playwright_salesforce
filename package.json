@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cng07/playwright_salesforce.git"
@@ -18,7 +21,8 @@
   "homepage": "https://github.com/cng07/playwright_salesforce#readme",
   "devDependencies": {
     "@playwright/test": "^1.61.1",
-    "@types/node": "^26.0.1"
+    "@types/node": "^26.0.1",
+    "prettier": "^3.8.4"
   },
   "dependencies": {
     "dotenv": "^17.4.2"
