@@ -20,12 +20,8 @@ export class LoginPage {
     this.textFieldPassword = this.page.locator("#password");
     this.buttonLogin = this.page.locator("#Login");
     this.buttonVerify = this.page.locator("#Verify");
-    this.textFieldGlobalSearchBar = this.page
-      .locator('input[type="search"]')
-      .nth(0);
-    this.buttonAppLauncher = this.page.getByRole("button", {
-      name: "App Launcher",
-    });
+    this.textFieldGlobalSearchBar = this.page.getByRole('button', { name: 'Search' })
+    this.buttonAppLauncher = this.page.getByRole("button", {name: "App Launcher"});
   }
 
   async goToSalesforceLoginPage() {
@@ -51,5 +47,6 @@ export class LoginPage {
     await this.page.goto(
       "https://orgfarm-b21abd5166-dev-ed.develop.lightning.force.com/lightning/n/devedapp__Welcome",
     );
+    await this.page.waitForLoadState("domcontentloaded");
   }
 }
