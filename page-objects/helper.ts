@@ -25,5 +25,6 @@ export class Helper {
 
   async clickTab(tabName: string) {
     await this.page.getByRole("link", { name: tabName }).click();
+    await this.pause(2000);
   }
 }

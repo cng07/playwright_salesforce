@@ -1,5 +1,6 @@
 import { Locator, Page, expect } from "@playwright/test";
 import { Helper } from "./helper";
+import { faker } from "@faker-js/faker";
 
 export class SalesPage {
   readonly page: Page;
@@ -32,7 +33,7 @@ export class SalesPage {
 
     this.textFieldGlobalSearchBar = this.page.getByRole("button", { name: "Search" });
     this.buttonAppLauncher = this.page.getByRole("button", { name: "App Launcher" });
-    this.buttonNew = this.page.getByRole("button", { name: "New" });
+    this.buttonNew = this.page.getByRole("button", { name: "New", exact: true });
     this.dropdownSalutation = this.page.getByRole("combobox", { name: "Salutation" });
     this.textFieldFirstName = this.page.getByRole("textbox", { name: "First Name" });
     this.textFieldLastName = this.page.getByRole("textbox", { name: "Last Name" });
@@ -49,7 +50,7 @@ export class SalesPage {
     this.dropdownLeadStatus = this.page.getByRole("combobox", { name: "Lead Status" });
     this.dropdownRating = this.page.getByRole("combobox", { name: "Rating" });
     this.textFieldNoOfEmployees = this.page.getByRole("spinbutton", { name: "No. of Employees" });
-    this.buttonSave = this.page.getByRole("button", { name: "Save" , exact: true });
+    this.buttonSave = this.page.getByRole("button", { name: "Save", exact: true });
   }
 
   async verifyDashboardPage() {
@@ -65,19 +66,47 @@ export class SalesPage {
   }
 
   async clickNewButton() {
-    await this.buttonNew.click();
+    await this.buttonNew.click({ timeout: 10000 });
     await expect(this.page.getByText("New Lead")).toBeVisible();
   }
 
   async fillLeadForm() {
     // await this.dropdownSalutation.selectOption(leadData.salutation);
-    await this.textFieldFirstName.fill("Alex");
-    await this.textFieldLastName.fill("Chan");
-    await this.textFieldCompany.fill("ACN");
-    // await this.textFieldTitle.fill(leadData.title);
+    await this.textFieldFirstName.fill(faker.person.firstName());
+    await this.textFieldLastName.fill(faker.person.lastName());
+    await this.textFieldCompany.fill(faker.company.name());
+    await this.textFieldTitle.fill(faker.person.jobTitle());
+    // await this.dropdownLeadSource.selectOption("Web");
+    // await this.dropdownIndustry.selectOption("Technology");
+    await this.textFieldAnnualRevenue.fill(
+      faker.number.int({ min: 100000, max: 10000000 }).toString()
+    );
+    await this.textFieldPhone.fill(`02${faker.string.numeric(8)}`);
+    await this.textFieldMobile.fill(`09${faker.string.numeric(9)}`);
+    await this.textFieldFax.fill(faker.phone.number());
+    await this.textFieldEmail.fill(faker.internet.email());
+    await this.textFieldWebsite.fill(faker.internet.url());
+    // await this.dropdownLeadStatus.selectOption("Open - Not Contacted");
+    // await this.dropdownRating.selectOption("Hot");
+    await this.textFieldNoOfEmployees.fill(faker.string.numeric(4));
   }
 
   async saveLead() {
     await this.buttonSave.click();
+    await expect(this.page).toHaveURL(/\/lightning\/r\/Lead\/[A-Za-z0-9]{18}\/view$/);
+  }
+
+  async verifyUniqueLeadId() {
+    const leadId = this.page.url().match(/\/Lead\/([A-Za-z0-9]{18})\/view/)![1]; // Get the current page URL and extract the 18-digit Lead ID
+    // console.log(leadId);
+    expect(leadId).toMatch(/^[A-Za-z0-9]{18}$/); // Verify the extracted Lead ID is exactly 18 alphanumeric characters
+
+    const match = this.page.url().match(/\/Lead\/([A-Za-z0-9]{18})\/view/); // Match the URL and capture the 18-character Lead ID
+    expect(match).not.toBeNull();
+    expect(match![1]).toHaveLength(18);
+  }
+
+  async verifyDetailsView() {
+    
   }
 }

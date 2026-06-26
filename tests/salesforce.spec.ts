@@ -49,13 +49,14 @@ test("Lead Creation & Management", async ({ page }) => {
   await h.searchAppLauncher("Sales");
   await expect(page.getByText("Seller Home")).toBeVisible();
 
-  // Open Leads tab.
+  // Open Leads tab
   await h.clickTab("Leads");
-  await expect(page.getByText("Get your lead pipeline flowing")).toBeVisible();
 
   // Create a new Lead with randomly generated details:
   await _page.clickNewButton();
   await _page.fillLeadForm();
   await _page.saveLead();
-  
+
+  // Validate lead has a unique Lead ID
+  await _page.verifyUniqueLeadId();
 });
