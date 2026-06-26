@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../page-objects/loginPage";
 import { Helper } from "../page-objects/helper";
+import { SalesPage } from "../page-objects/salesPage";
 
 test("Salesforce Login", async ({ page }) => {
   test.setTimeout(120000);
@@ -9,10 +10,7 @@ test("Salesforce Login", async ({ page }) => {
 
   await _page.goToSalesforceLoginPage();
 
-  await _page.loginToSalesforce(
-    process.env.SALESFORCE_EMAIL!,
-    process.env.SALESFORCE_PASSWORD!,
-  );
+  await _page.loginToSalesforce(process.env.SALESFORCE_EMAIL!, process.env.SALESFORCE_PASSWORD!);
 
   // Input OTP manually then manually click Verify button
   await h.pause(50000);
@@ -34,6 +32,30 @@ test("Salesforce Dashboard page", async ({ page }) => {
 
   // Validate successful login by checking for the global search bar or App Launcher icon.
   await _page.verifyDashboardPage();
+});
 
-  await h.pause(15000);
+test("Lead Creation & Management", async ({ page }) => {
+  test.setTimeout(120000);
+  const _pageLogin = new LoginPage(page);
+  const _page = new SalesPage(page);
+  const h = new Helper(page);
+
+  await _pageLogin.goToSalesforceDashboardPage();
+
+  // Validate successful login by checking for the global search bar or App Launcher icon.
+  await _pageLogin.verifyDashboardPage();
+
+  // Search for "Sales" App via App Launcher
+  await h.searchAppLauncher("Sales");
+  await expect(page.getByText("Seller Home")).toBeVisible();
+
+  // Open Leads tab.
+  await h.clickTab("Leads");
+  await expect(page.getByText("Get your lead pipeline flowing")).toBeVisible();
+
+  // Create a new Lead with randomly generated details:
+  await _page.clickNewButton();
+  await _page.fillLeadForm();
+  await _page.saveLead();
+  
 });

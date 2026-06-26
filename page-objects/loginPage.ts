@@ -45,8 +45,9 @@ export class LoginPage {
 
   async goToSalesforceDashboardPage() {
     await this.page.goto(
-      "https://orgfarm-b21abd5166-dev-ed.develop.lightning.force.com/lightning/n/devedapp__Welcome"
+      "https://orgfarm-b21abd5166-dev-ed.develop.lightning.force.com/lightning/n/devedapp__Welcome",
+      { waitUntil: "domcontentloaded" }
     );
-    await this.page.waitForLoadState("domcontentloaded");
+    // await expect(this.page.getByText("Handpicked blogs, videos, and events to level up your skills.")).toBeVisible();
   }
 }
