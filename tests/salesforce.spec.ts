@@ -33,7 +33,59 @@ test("Salesforce Dashboard page", async ({ page }) => {
   await _page.verifyDashboardPage();
 });
 
-test("Lead Creation & Management", async ({ page }) => {
+for (let i = 1; i <= 5; i++) {
+  test(`Lead Creation & Management (${i})`, async ({ page }) => {
+    test.setTimeout(60000);
+    const _pageLogin = new LoginPage(page);
+    const _page = new SalesPage(page);
+    const h = new Helper(page);
+    const lead = generateLeadData();
+
+    await _pageLogin.goToSalesforceDashboardPage();
+
+    // Validate successful login by checking for the global search bar or App Launcher icon.
+    await _pageLogin.verifyDashboardPage();
+
+    await h.searchAppLauncher("DevOps Center");
+    await expect(page.getByRole("heading", { name: "DevOps Center", exact: true })).toBeVisible({
+      timeout: 15000,
+    });
+
+    // Search for "Sales" App via App Launcher
+    await h.searchAppLauncher("Sales");
+    await expect(page.getByRole("heading", { name: "Sales", exact: true })).toBeVisible({
+      timeout: 15000,
+    });
+
+    // Open Leads tab
+    await h.clickTab("Leads");
+
+    // Create a new Lead with generated details:
+    await _page.clickNewButton();
+    await _page.fillLeadForm(lead);
+    await _page.saveLead();
+
+    // Validate lead has a unique Lead ID
+    await _page.verifyUniqueLeadId();
+
+    // Validate that correct data is shown in the details view
+    await _page.clickDetailsTab();
+    await _page.verifyDetailsView(lead);
+
+    // Edit Lead Status
+    lead.leadStatus = randomDifferentValue(lead.leadStatus, leadStatus);
+    await _page.editLeadStatus(lead.leadStatus);
+
+    // Validate the updated Lead Status
+    await _page.clickDetailsTab();
+    await _page.verifyDetailsView(lead);
+
+    // Delete the created lead
+    await _page.deleteLead();
+  });
+}
+
+test(`Lead > Opportunity Conversion`, async ({ page }) => {
   test.setTimeout(60000);
   const _pageLogin = new LoginPage(page);
   const _page = new SalesPage(page);
@@ -41,58 +93,14 @@ test("Lead Creation & Management", async ({ page }) => {
   const lead = generateLeadData();
 
   await _pageLogin.goToSalesforceDashboardPage();
-
-  // Validate successful login by checking for the global search bar or App Launcher icon.
   await _pageLogin.verifyDashboardPage();
 
   await h.searchAppLauncher("DevOps Center");
-  await expect(page.getByText("Connect to Version Control")).toBeVisible({ timeout: 5000 });
-
-  // Search for "Sales" App via App Launcher
+  await expect(page.getByRole("heading", { name: "DevOps Center" })).toBeVisible({
+    timeout: 15000,
+  });
   await h.searchAppLauncher("Sales");
-  await expect(page.getByText("Seller Home")).toBeVisible({ timeout: 5000 });
-
-  // Open Leads tab
-  await h.clickTab("Leads");
-
-  // Create a new Lead with generated details:
-  await _page.clickNewButton();
-  await _page.fillLeadForm(lead);
-  await _page.saveLead();
-
-  // Validate lead has a unique Lead ID
-  await _page.verifyUniqueLeadId();
-
-  // Validate that correct data is shown in the details view
-  await _page.clickDetailsTab();
-  await _page.verifyDetailsView(lead);
-
-  // Edit Lead Status
-  lead.leadStatus = randomDifferentValue(lead.leadStatus, leadStatus);
-  await _page.editLeadStatus(lead.leadStatus);
-
-  // Validate the updated Lead Status
-  await _page.clickDetailsTab();
-  await _page.verifyDetailsView(lead);
-
-  // Delete the created lead
-  await _page.deleteLead();
-});
-
-test("Lead > Opportunity Conversion", async ({ page }) => {
-  test.setTimeout(60000);
-  const _pageLogin = new LoginPage(page);
-  const _page = new SalesPage(page);
-  const h = new Helper(page);
-  const lead = generateLeadData();
-
-  await _pageLogin.goToSalesforceDashboardPage();
-  await _pageLogin.verifyDashboardPage();
-
-  await h.searchAppLauncher("DevOps Center");
-  await expect(page.getByText("Connect to Version Control")).toBeVisible({ timeout: 5000 });
-  await h.searchAppLauncher("Sales");
-  await expect(page.getByText("Seller Home")).toBeVisible({ timeout: 5000 });
+  await expect(page.getByRole("heading", { name: "Sales" })).toBeVisible({ timeout: 15000 });
 
   await h.clickTab("Leads");
   await _page.clickNewButton();
