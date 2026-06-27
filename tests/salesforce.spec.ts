@@ -107,7 +107,11 @@ test("Lead > Opportunity Conversion", async ({ page }) => {
   await _page.clickConvertButton();
   await _page.convertLeadRadio("Create New Account");
   await _page.convertLeadRadio("Create New Opportunity");
+  const opportunityName = await _page.getConvertLeadTextInputValue("Opportunity Name");
   await _page.clickConvertButtonOnConvertLeadModule();
+
+  await h.clickTab("Opportunities");
+  await _page.clickOpportunityName(opportunityName);
 
   // Delete the created lead
   // await _page.deleteLead();

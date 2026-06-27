@@ -258,4 +258,22 @@ export class SalesPage {
     await this.page.getByRole("button", { name: "Go to Leads" }).click();
     await expect(this.page.getByText("My Leads", { exact: true })).toBeVisible();
   }
+
+  async getConvertLeadTextInputValue(fieldLabel: string): Promise<string> {
+    const convertLeadDialog = this.page.locator('div[role="dialog"]', { hasText: "Convert Lead" });
+    const convertLeadInput = convertLeadDialog.getByLabel(fieldLabel).first();
+
+    await expect(convertLeadDialog).toBeVisible({ timeout: 10000 });
+    await expect(convertLeadInput).toHaveCount(1);
+    return await convertLeadInput.inputValue();
+  }
+
+  async clickOpportunityName(opportunityName: string) {
+    const opportunityLink = this.page.getByText(opportunityName, { exact: true });
+    await expect(opportunityLink).toBeVisible({ timeout: 10000 });
+    await opportunityLink.click();
+    await expect(this.page.getByRole("button", { name: "Mark Stage as Complete" })).toBeVisible({
+      timeout: 3000,
+    });
+  }
 }
