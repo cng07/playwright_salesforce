@@ -3,7 +3,7 @@ import { LoginPage } from "../page-objects/loginPage";
 import { Helper } from "../page-objects/helper";
 import { SalesPage } from "../page-objects/salesPage";
 
-test("Salesforce Login", async ({ page }) => {
+test("Salesforce Login with OTP", async ({ page }) => {
   test.setTimeout(120000);
   const _page = new LoginPage(page);
   const h = new Helper(page);
@@ -13,14 +13,12 @@ test("Salesforce Login", async ({ page }) => {
   await _page.loginToSalesforce(process.env.SALESFORCE_EMAIL!, process.env.SALESFORCE_PASSWORD!);
 
   // Input OTP manually then manually click Verify button
-  await h.pause(50000);
+  // Validate successful login by checking for the global search bar or App Launcher icon
+  await _page.verifyDashboardPage();
 
   await page.context().storageState({
     path: "playwright/.auth/salesforce.json",
   });
-
-  // Validate successful login by checking for the global search bar or App Launcher icon.
-  await _page.verifyDashboardPage();
 });
 
 test("Salesforce Dashboard page", async ({ page }) => {
@@ -59,4 +57,7 @@ test("Lead Creation & Management", async ({ page }) => {
 
   // Validate lead has a unique Lead ID
   await _page.verifyUniqueLeadId();
+
+  // Delete the created lead
+  await _page.deleteLead();
 });

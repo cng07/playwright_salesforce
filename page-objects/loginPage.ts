@@ -39,7 +39,7 @@ export class LoginPage {
 
   async verifyDashboardPage() {
     // await this.buttonVerify.click();
-    await expect(this.textFieldGlobalSearchBar).toBeVisible();
+    await expect(this.textFieldGlobalSearchBar).toBeVisible({timeout: 50000});
     await expect(this.buttonAppLauncher).toBeVisible();
   }
 
