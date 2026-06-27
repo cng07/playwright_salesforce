@@ -26,6 +26,9 @@ export class SalesPage {
   dropdownRating: Locator;
   textFieldNoOfEmployees: Locator;
   buttonSave: Locator;
+  buttonShowMoreActions: Locator;
+  buttonDelete: Locator;
+  buttonDelete2: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -51,6 +54,11 @@ export class SalesPage {
     this.dropdownRating = this.page.getByRole("combobox", { name: "Rating" });
     this.textFieldNoOfEmployees = this.page.getByRole("spinbutton", { name: "No. of Employees" });
     this.buttonSave = this.page.getByRole("button", { name: "Save", exact: true });
+    this.buttonShowMoreActions = this.page.getByRole("button", { name: "Show more actions" });
+    this.buttonDelete = this.page.getByRole("menuitem", { name: "Delete" });
+    this.buttonDelete2 = this.page.locator(
+      "//span[@dir='ltr' and contains(@class, 'label') and normalize-space(.)='Delete']"
+    );
   }
 
   async verifyDashboardPage() {
@@ -93,7 +101,9 @@ export class SalesPage {
 
   async saveLead() {
     await this.buttonSave.click();
-    await expect(this.page).toHaveURL(/\/lightning\/r\/Lead\/[A-Za-z0-9]{18}\/view$/);
+    await expect(this.page.getByText("was created.")).toBeVisible();
+    // await this.h.pause(1000);
+    await expect(this.page).toHaveURL(/\/lightning\/r\/Lead\/[A-Za-z0-9]{18}\/view$/, {timeout: 5000});
   }
 
   async verifyUniqueLeadId() {
@@ -106,7 +116,13 @@ export class SalesPage {
     expect(match![1]).toHaveLength(18);
   }
 
-  async verifyDetailsView() {
-    
+  async deleteLead() {
+    await this.buttonShowMoreActions.click();
+    await this.buttonDelete.click();
+    await expect(this.page.getByText("Are you sure you want to delete this lead?")).toBeVisible();
+    await this.buttonDelete2.click();
+    await expect(this.page.getByText("was deleted.")).toBeVisible();
   }
+
+  async verifyDetailsView() {}
 }
