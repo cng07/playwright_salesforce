@@ -10,7 +10,7 @@ export class Helper {
     this.page = page;
 
     this.buttonAppLauncher = this.page.getByRole("button", { name: "App Launcher" });
-    this.textFieldAppLauncher = this.page.getByPlaceholder('Search apps and items...');
+    this.textFieldAppLauncher = this.page.locator('input[type="search"]#global-search-01');
   }
 
   async pause(ms: number) {
@@ -19,7 +19,8 @@ export class Helper {
 
   async searchAppLauncher(appName: string) {
     await this.buttonAppLauncher.click();
-    await this.textFieldAppLauncher.pressSequentially(appName, {delay: 300}); // Type the app name with a delay of 100ms between each character
+    await this.pause(500);
+    await this.textFieldAppLauncher.pressSequentially(appName, { delay: 300 });
     await this.page.getByRole("option", { name: appName, exact: true }).click();
   }
 

@@ -22,7 +22,7 @@ test("Salesforce Login with OTP", async ({ page }) => {
 });
 
 test("Salesforce Dashboard page", async ({ page }) => {
-  test.setTimeout(120000);
+  // test.setTimeout(120000);
   const _page = new LoginPage(page);
   const h = new Helper(page);
 
@@ -33,7 +33,7 @@ test("Salesforce Dashboard page", async ({ page }) => {
 });
 
 test("Lead Creation & Management", async ({ page }) => {
-  test.setTimeout(120000);
+  test.setTimeout(60000);
   const _pageLogin = new LoginPage(page);
   const _page = new SalesPage(page);
   const h = new Helper(page);
@@ -43,9 +43,12 @@ test("Lead Creation & Management", async ({ page }) => {
   // Validate successful login by checking for the global search bar or App Launcher icon.
   await _pageLogin.verifyDashboardPage();
 
+  await h.searchAppLauncher("DevOps Center");
+  await expect(page.getByText("Connect to Version Control")).toBeVisible({ timeout: 5000 });
+
   // Search for "Sales" App via App Launcher
   await h.searchAppLauncher("Sales");
-  await expect(page.getByText("Seller Home")).toBeVisible();
+  await expect(page.getByText("Seller Home")).toBeVisible({ timeout: 5000 });
 
   // Open Leads tab
   await h.clickTab("Leads");
