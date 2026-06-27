@@ -78,3 +78,37 @@ test("Lead Creation & Management", async ({ page }) => {
   // Delete the created lead
   await _page.deleteLead();
 });
+
+test("Lead > Opportunity Conversion", async ({ page }) => {
+  test.setTimeout(60000);
+  const _pageLogin = new LoginPage(page);
+  const _page = new SalesPage(page);
+  const h = new Helper(page);
+  const lead = generateLeadData();
+
+  await _pageLogin.goToSalesforceDashboardPage();
+  await _pageLogin.verifyDashboardPage();
+
+  await h.searchAppLauncher("DevOps Center");
+  await expect(page.getByText("Connect to Version Control")).toBeVisible({ timeout: 5000 });
+  await h.searchAppLauncher("Sales");
+  await expect(page.getByText("Seller Home")).toBeVisible({ timeout: 5000 });
+
+  await h.clickTab("Leads");
+  await _page.clickNewButton();
+  await _page.fillLeadForm(lead);
+  await _page.saveLead();
+
+  await _page.verifyUniqueLeadId();
+  await _page.clickDetailsTab();
+  await _page.verifyDetailsView(lead);
+
+  // Lead > Opportunity Conversion
+  await _page.clickConvertButton();
+  await _page.convertLeadRadio("Create New Account");
+  await _page.convertLeadRadio("Create New Opportunity");
+  await _page.clickConvertButtonOnConvertLeadModule();
+
+  // Delete the created lead
+  // await _page.deleteLead();
+});

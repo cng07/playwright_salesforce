@@ -32,6 +32,8 @@ export class SalesPage {
   tabDetails: Locator;
   buttonEdit: Locator;
   buttonSaveAndNew: Locator;
+  buttonConvertMenuItem: Locator;
+  buttonConvert: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -65,6 +67,8 @@ export class SalesPage {
     this.tabDetails = this.page.getByRole("tab", { name: "Details" });
     this.buttonEdit = this.page.getByRole("menuitem", { name: "Edit" });
     this.buttonSaveAndNew = this.page.getByRole("button", { name: "Save & New" });
+    this.buttonConvertMenuItem = this.page.getByRole("menuitem", { name: "Convert" });
+    this.buttonConvert = this.page.getByRole("button", { name: "Convert" });
   }
 
   async verifyDashboardPage() {
@@ -170,6 +174,12 @@ export class SalesPage {
     await expect(this.buttonSave).toBeVisible();
   }
 
+  async clickConvertButton() {
+    await this.buttonShowMoreActions.click();
+    await this.buttonConvertMenuItem.click();
+    await expect(this.page.getByText("Convert Lead", { exact: true })).toBeVisible();
+  }
+
   async editLeadStatus(newStatus: string) {
     await this.buttonShowMoreActions.click();
     await this.buttonEdit.click();
@@ -230,5 +240,22 @@ export class SalesPage {
     await this.verifyField("Industry", lead.industry);
     await this.verifyField("Lead Status", lead.leadStatus);
     await this.verifyField("Rating", lead.rating);
+  }
+
+  async convertLeadRadio(radio: string) {
+    const convertLeadRadio = this.page.locator("label", { hasText: radio }).first();
+
+    await expect(convertLeadRadio).toBeVisible({ timeout: 10000 });
+    await convertLeadRadio.click();
+    await expect(convertLeadRadio).toBeChecked();
+  }
+
+  async clickConvertButtonOnConvertLeadModule() {
+    await this.buttonConvert.click();
+    await expect(
+      this.page.getByText("Your lead has been converted", { exact: true })
+    ).toBeVisible();
+    await this.page.getByRole("button", { name: "Go to Leads" }).click();
+    await expect(this.page.getByText("My Leads", { exact: true })).toBeVisible();
   }
 }
