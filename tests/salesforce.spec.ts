@@ -3,7 +3,7 @@ import { LoginPage } from "../page-objects/loginPage";
 import { Helper } from "../page-objects/helper";
 import { SalesPage } from "../page-objects/salesPage";
 
-test("Salesforce Login with OTP", async ({ page }) => {
+test("Salesforce Login with OTP @runFirstLogin", async ({ page }) => {
   test.setTimeout(120000);
   const _page = new LoginPage(page);
   const h = new Helper(page);
