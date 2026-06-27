@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { LoginPage } from "../page-objects/loginPage";
 import { Helper } from "../page-objects/helper";
 import { SalesPage } from "../page-objects/salesPage";
+import { generateLeadData } from "../utils/salesLeadsData";
 
 test("Salesforce Login with OTP @runFirstLogin", async ({ page }) => {
   test.setTimeout(120000);
@@ -37,6 +38,7 @@ test("Lead Creation & Management", async ({ page }) => {
   const _pageLogin = new LoginPage(page);
   const _page = new SalesPage(page);
   const h = new Helper(page);
+  const lead = generateLeadData();
 
   await _pageLogin.goToSalesforceDashboardPage();
 
@@ -53,14 +55,17 @@ test("Lead Creation & Management", async ({ page }) => {
   // Open Leads tab
   await h.clickTab("Leads");
 
-  // Create a new Lead with randomly generated details:
+  // Create a new Lead with generated details:
   await _page.clickNewButton();
-  await _page.fillLeadForm();
-  await _page.fillLeadFormDropdownV2();
+  await _page.fillLeadForm(lead);
   await _page.saveLead();
 
   // Validate lead has a unique Lead ID
   await _page.verifyUniqueLeadId();
+
+  // Validate that correct data is shown in the details view
+  await _page.clickDetailsTab();
+  await _page.verifyDetailsView(lead);
 
   // Delete the created lead
   await _page.deleteLead();

@@ -1,13 +1,6 @@
 import { Locator, Page, expect } from "@playwright/test";
 import { Helper } from "./helper";
-import { faker } from "@faker-js/faker";
-import {
-  salutation,
-  leadSource,
-  industry,
-  leadStatus,
-  rating,
-} from "../utils/salesLeadsDropdownData";
+import type { LeadData } from "../utils/salesLeadsData";
 
 export class SalesPage {
   readonly page: Page;
@@ -36,6 +29,7 @@ export class SalesPage {
   buttonShowMoreActions: Locator;
   buttonDelete: Locator;
   buttonDelete2: Locator;
+  tabDetails: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -66,6 +60,7 @@ export class SalesPage {
     this.buttonDelete2 = this.page.locator(
       "//span[@dir='ltr' and contains(@class, 'label') and normalize-space(.)='Delete']"
     );
+    this.tabDetails = this.page.getByRole("tab", { name: "Details" });
   }
 
   async verifyDashboardPage() {
@@ -85,65 +80,55 @@ export class SalesPage {
     await expect(this.page.getByText("New Lead")).toBeVisible();
   }
 
-  async fillLeadForm() {
-    await this.textFieldFirstName.fill(faker.person.firstName());
-    await this.textFieldLastName.fill(faker.person.lastName());
-    await this.textFieldCompany.fill(faker.company.name());
-    await this.textFieldTitle.fill(faker.person.jobTitle());
-    await this.textFieldAnnualRevenue.fill(
-      faker.number.int({ min: 100000, max: 10000000 }).toString()
-    );
-    await this.textFieldPhone.fill(`02${faker.string.numeric(8)}`);
-    await this.textFieldMobile.fill(`09${faker.string.numeric(9)}`);
-    await this.textFieldFax.fill(faker.phone.number());
-    await this.textFieldEmail.fill(faker.internet.email());
-    await this.textFieldWebsite.fill(faker.internet.url());
+  async fillLeadForm(lead: LeadData) {
+    await this.textFieldFirstName.fill(lead.firstName);
+    await this.textFieldLastName.fill(lead.lastName);
+    await this.textFieldCompany.fill(lead.company);
+    await this.textFieldTitle.fill(lead.title);
+    await this.textFieldAnnualRevenue.fill(lead.annualRevenue);
+    await this.textFieldPhone.fill(lead.phone);
+    await this.textFieldMobile.fill(lead.mobile);
+    await this.textFieldFax.fill(lead.fax);
+    await this.textFieldEmail.fill(lead.email);
+    await this.textFieldWebsite.fill(lead.website);
+    await this.textFieldNoOfEmployees.fill(lead.numberOfEmployees);
 
-    await this.textFieldNoOfEmployees.fill(faker.string.numeric(4));
+    await this.fillLeadFormDropdownV2(lead);
   }
 
-  async fillLeadFormDropdown() {
-    // await this.dropdownSalutation.selectOption({ label: faker.helpers.arrayElement(salutation) });
+  async fillLeadFormDropdown(lead: LeadData) {
     await this.dropdownSalutation.click();
-    await this.page.getByRole("option", { name: faker.helpers.arrayElement(salutation) }).click();
+    await this.page.getByRole("option", { name: lead.salutation }).click();
 
-    // await this.dropdownLeadSource.selectOption({ label: faker.helpers.arrayElement(leadSource) });
     await this.dropdownLeadSource.click();
-    await this.page.getByRole("option", { name: faker.helpers.arrayElement(leadSource) }).click();
+    await this.page.getByRole("option", { name: lead.leadSource }).click();
 
-    // await this.dropdownIndustry.selectOption({ label: faker.helpers.arrayElement(industry) });
     await this.dropdownIndustry.click();
-    await this.page
-      .getByRole("option", { name: faker.helpers.arrayElement(industry), exact: true })
-      .click();
+    await this.page.getByRole("option", { name: lead.industry, exact: true }).click();
 
-    // await this.dropdownLeadStatus.selectOption({ label: faker.helpers.arrayElement(leadStatus) });
     await this.dropdownLeadStatus.click();
-    await this.page.getByRole("option", { name: faker.helpers.arrayElement(leadStatus) }).click();
+    await this.page.getByRole("option", { name: lead.leadStatus }).click();
 
-    // await this.dropdownRating.selectOption({ label: faker.helpers.arrayElement(rating) });
     await this.dropdownRating.click();
-    await this.page.getByRole("option", { name: faker.helpers.arrayElement(rating) }).click();
+    await this.page.getByRole("option", { name: lead.rating }).click();
   }
 
-  private async selectRandomOption(dropdown: Locator, options: string[], exact = false) {
-    const value = faker.helpers.arrayElement(options);
-
+  private async selectOption(dropdown: Locator, value: string, exact = false) {
     await dropdown.click();
     await this.page.getByRole("option", { name: value, exact }).click();
   }
 
-  async fillLeadFormDropdownV2() {
+  async fillLeadFormDropdownV2(lead: LeadData) {
     const dropdowns = [
-      { locator: this.dropdownSalutation, options: salutation },
-      { locator: this.dropdownLeadSource, options: leadSource },
-      { locator: this.dropdownIndustry, options: industry, exact: true },
-      { locator: this.dropdownLeadStatus, options: leadStatus },
-      { locator: this.dropdownRating, options: rating },
+      { locator: this.dropdownSalutation, value: lead.salutation },
+      { locator: this.dropdownLeadSource, value: lead.leadSource },
+      { locator: this.dropdownIndustry, value: lead.industry, exact: true },
+      { locator: this.dropdownLeadStatus, value: lead.leadStatus },
+      { locator: this.dropdownRating, value: lead.rating },
     ];
 
     for (const dropdown of dropdowns) {
-      await this.selectRandomOption(dropdown.locator, dropdown.options, dropdown.exact);
+      await this.selectOption(dropdown.locator, dropdown.value, dropdown.exact);
     }
   }
 
@@ -174,5 +159,53 @@ export class SalesPage {
     await expect(this.page.getByText("was deleted.")).toBeVisible();
   }
 
-  async verifyDetailsView() {}
+  async clickDetailsTab() {
+    await this.tabDetails.click();
+    await expect(this.page.getByText("Lead Owner", { exact: true })).toBeVisible();
+  }
+
+  /**
+   * Verifies the displayed value of a Salesforce record field based on its label.
+   * Optionally normalizes numeric values (e.g. Phone, Mobile, Fax) to ignore
+   * formatting differences such as spaces, parentheses, or dashes.
+   */
+  async verifyField(label: string, expected: string, normalizeDigits = false) {
+    const field = this.page
+      .locator(`.test-id__field-label:text-is("${label}")`)
+      .locator(
+        "xpath=ancestor::*[contains(concat(' ', normalize-space(@class), ' '), ' slds-form-element ')][1]"
+      );
+
+    // Retrieve the displayed field value
+    const value = field.locator(".test-id__field-value").first();
+
+    // Compare only numeric characters for phone-related fields
+    if (normalizeDigits) {
+      await expect
+        .poll(async () => (await value.innerText()).replace(/\D/g, ""), { timeout: 5000 })
+        .toContain(expected.replace(/\D/g, ""));
+      return;
+    }
+
+    // Verify the displayed text matches the expected value
+    await expect(value).toContainText(expected);
+  }
+
+  async verifyDetailsView(lead: LeadData) {
+    const fullName = `${lead.salutation} ${lead.firstName} ${lead.lastName}`;
+    await this.verifyField("Name", fullName);
+    await this.verifyField("Title", lead.title);
+    await this.verifyField("Company", lead.company);
+    await this.verifyField("Annual Revenue", lead.annualRevenue);
+    await this.verifyField("Phone", lead.phone, true);
+    await this.verifyField("Mobile", lead.mobile, true);
+    await this.verifyField("Fax", lead.fax, true);
+    await this.verifyField("Email", lead.email);
+    await this.verifyField("Website", lead.website);
+    await this.verifyField("No. of Employees", lead.numberOfEmployees);
+    await this.verifyField("Lead Source", lead.leadSource);
+    await this.verifyField("Industry", lead.industry);
+    await this.verifyField("Lead Status", lead.leadStatus);
+    await this.verifyField("Rating", lead.rating);
+  }
 }
