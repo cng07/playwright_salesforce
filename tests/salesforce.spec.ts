@@ -56,6 +56,7 @@ test("Lead Creation & Management", async ({ page }) => {
   // Create a new Lead with randomly generated details:
   await _page.clickNewButton();
   await _page.fillLeadForm();
+  await _page.fillLeadFormDropdownV2();
   await _page.saveLead();
 
   // Validate lead has a unique Lead ID

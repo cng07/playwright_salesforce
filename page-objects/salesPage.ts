@@ -1,6 +1,13 @@
 import { Locator, Page, expect } from "@playwright/test";
 import { Helper } from "./helper";
 import { faker } from "@faker-js/faker";
+import {
+  salutation,
+  leadSource,
+  industry,
+  leadStatus,
+  rating,
+} from "../utils/salesLeadsDropdownData";
 
 export class SalesPage {
   readonly page: Page;
@@ -79,13 +86,10 @@ export class SalesPage {
   }
 
   async fillLeadForm() {
-    // await this.dropdownSalutation.selectOption(leadData.salutation);
     await this.textFieldFirstName.fill(faker.person.firstName());
     await this.textFieldLastName.fill(faker.person.lastName());
     await this.textFieldCompany.fill(faker.company.name());
     await this.textFieldTitle.fill(faker.person.jobTitle());
-    // await this.dropdownLeadSource.selectOption("Web");
-    // await this.dropdownIndustry.selectOption("Technology");
     await this.textFieldAnnualRevenue.fill(
       faker.number.int({ min: 100000, max: 10000000 }).toString()
     );
@@ -94,16 +98,62 @@ export class SalesPage {
     await this.textFieldFax.fill(faker.phone.number());
     await this.textFieldEmail.fill(faker.internet.email());
     await this.textFieldWebsite.fill(faker.internet.url());
-    // await this.dropdownLeadStatus.selectOption("Open - Not Contacted");
-    // await this.dropdownRating.selectOption("Hot");
+
     await this.textFieldNoOfEmployees.fill(faker.string.numeric(4));
+  }
+
+  async fillLeadFormDropdown() {
+    // await this.dropdownSalutation.selectOption({ label: faker.helpers.arrayElement(salutation) });
+    await this.dropdownSalutation.click();
+    await this.page.getByRole("option", { name: faker.helpers.arrayElement(salutation) }).click();
+
+    // await this.dropdownLeadSource.selectOption({ label: faker.helpers.arrayElement(leadSource) });
+    await this.dropdownLeadSource.click();
+    await this.page.getByRole("option", { name: faker.helpers.arrayElement(leadSource) }).click();
+
+    // await this.dropdownIndustry.selectOption({ label: faker.helpers.arrayElement(industry) });
+    await this.dropdownIndustry.click();
+    await this.page
+      .getByRole("option", { name: faker.helpers.arrayElement(industry), exact: true })
+      .click();
+
+    // await this.dropdownLeadStatus.selectOption({ label: faker.helpers.arrayElement(leadStatus) });
+    await this.dropdownLeadStatus.click();
+    await this.page.getByRole("option", { name: faker.helpers.arrayElement(leadStatus) }).click();
+
+    // await this.dropdownRating.selectOption({ label: faker.helpers.arrayElement(rating) });
+    await this.dropdownRating.click();
+    await this.page.getByRole("option", { name: faker.helpers.arrayElement(rating) }).click();
+  }
+
+  private async selectRandomOption(dropdown: Locator, options: string[], exact = false) {
+    const value = faker.helpers.arrayElement(options);
+
+    await dropdown.click();
+    await this.page.getByRole("option", { name: value, exact }).click();
+  }
+
+  async fillLeadFormDropdownV2() {
+    const dropdowns = [
+      { locator: this.dropdownSalutation, options: salutation },
+      { locator: this.dropdownLeadSource, options: leadSource },
+      { locator: this.dropdownIndustry, options: industry, exact: true },
+      { locator: this.dropdownLeadStatus, options: leadStatus },
+      { locator: this.dropdownRating, options: rating },
+    ];
+
+    for (const dropdown of dropdowns) {
+      await this.selectRandomOption(dropdown.locator, dropdown.options, dropdown.exact);
+    }
   }
 
   async saveLead() {
     await this.buttonSave.click();
     await expect(this.page.getByText("was created.")).toBeVisible();
     // await this.h.pause(1000);
-    await expect(this.page).toHaveURL(/\/lightning\/r\/Lead\/[A-Za-z0-9]{18}\/view$/, {timeout: 5000});
+    await expect(this.page).toHaveURL(/\/lightning\/r\/Lead\/[A-Za-z0-9]{18}\/view$/, {
+      timeout: 5000,
+    });
   }
 
   async verifyUniqueLeadId() {
