@@ -30,6 +30,8 @@ export class SalesPage {
   buttonDelete: Locator;
   buttonDelete2: Locator;
   tabDetails: Locator;
+  buttonEdit: Locator;
+  buttonSaveAndNew: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -61,6 +63,8 @@ export class SalesPage {
       "//span[@dir='ltr' and contains(@class, 'label') and normalize-space(.)='Delete']"
     );
     this.tabDetails = this.page.getByRole("tab", { name: "Details" });
+    this.buttonEdit = this.page.getByRole("menuitem", { name: "Edit" });
+    this.buttonSaveAndNew = this.page.getByRole("button", { name: "Save & New" });
   }
 
   async verifyDashboardPage() {
@@ -157,6 +161,25 @@ export class SalesPage {
     await expect(this.page.getByText("Are you sure you want to delete this lead?")).toBeVisible();
     await this.buttonDelete2.click();
     await expect(this.page.getByText("was deleted.")).toBeVisible();
+  }
+
+  async editLead() {
+    await this.buttonShowMoreActions.click();
+    await this.buttonEdit.click();
+    await expect(this.buttonSaveAndNew).toBeVisible();
+    await expect(this.buttonSave).toBeVisible();
+  }
+
+  async editLeadStatus(newStatus: string) {
+    await this.buttonShowMoreActions.click();
+    await this.buttonEdit.click();
+    await expect(this.dropdownLeadStatus).toBeVisible({ timeout: 10000 });
+    await this.selectOption(this.dropdownLeadStatus, newStatus);
+    await this.buttonSave.click();
+    await expect(this.page.getByText("was saved.")).toBeVisible();
+    await expect(this.page).toHaveURL(/\/lightning\/r\/Lead\/[A-Za-z0-9]{18}\/view$/, {
+      timeout: 10000,
+    });
   }
 
   async clickDetailsTab() {

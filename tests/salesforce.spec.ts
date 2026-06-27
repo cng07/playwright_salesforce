@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { LoginPage } from "../page-objects/loginPage";
 import { Helper } from "../page-objects/helper";
 import { SalesPage } from "../page-objects/salesPage";
-import { generateLeadData } from "../utils/salesLeadsData";
+import { generateLeadData, leadStatus, randomDifferentValue } from "../utils/salesLeadsData";
 
 test("Salesforce Login with OTP @runFirstLogin", async ({ page }) => {
   test.setTimeout(120000);
@@ -64,6 +64,14 @@ test("Lead Creation & Management", async ({ page }) => {
   await _page.verifyUniqueLeadId();
 
   // Validate that correct data is shown in the details view
+  await _page.clickDetailsTab();
+  await _page.verifyDetailsView(lead);
+
+  // Edit Lead Status
+  lead.leadStatus = randomDifferentValue(lead.leadStatus, leadStatus);
+  await _page.editLeadStatus(lead.leadStatus);
+
+  // Validate the updated Lead Status
   await _page.clickDetailsTab();
   await _page.verifyDetailsView(lead);
 

@@ -62,6 +62,16 @@ export interface LeadData {
   rating: string;
 }
 
+export function randomDifferentValue(current: string, values: string[]): string {
+  const remainingValues = values.filter((value) => value !== current);
+
+  if (remainingValues.length === 0) {
+    return current;
+  }
+
+  return faker.helpers.arrayElement(remainingValues);
+}
+
 export function generateLeadData(): LeadData {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
