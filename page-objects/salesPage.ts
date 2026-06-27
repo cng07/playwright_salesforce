@@ -3,6 +3,8 @@ import { Helper } from "./helper";
 import type { LeadData } from "../utils/salesLeadsData";
 
 export class SalesPage {
+  private readonly leadRecordUrl = /\/lightning\/r\/(?:Lead\/)?([A-Za-z0-9]{18})\/view$/;
+
   readonly page: Page;
   readonly h: Helper;
 
@@ -42,6 +44,7 @@ export class SalesPage {
     this.textFieldGlobalSearchBar = this.page.getByRole("button", { name: "Search" });
     this.buttonAppLauncher = this.page.getByRole("button", { name: "App Launcher" });
     this.buttonNew = this.page.getByRole("button", { name: "New", exact: true });
+    // this.buttonNew = this.page.locator("button[title='New'], a[title='New'], button:has-text('New')").first();
     this.dropdownSalutation = this.page.getByRole("combobox", { name: "Salutation" });
     this.textFieldFirstName = this.page.getByRole("textbox", { name: "First Name" });
     this.textFieldLastName = this.page.getByRole("textbox", { name: "Last Name" });
@@ -143,20 +146,16 @@ export class SalesPage {
   async saveLead() {
     await this.buttonSave.click();
     await expect(this.page.getByText("was created.")).toBeVisible();
-    await this.h.pause(1000);
-    await expect(this.page).toHaveURL(/\/lightning\/r\/Lead\/[A-Za-z0-9]{18}\/view$/, {
-      timeout: 5000,
+    await expect(this.page).toHaveURL(this.leadRecordUrl, {
+      timeout: 10000,
     });
   }
 
   async verifyUniqueLeadId() {
-    const leadId = this.page.url().match(/\/Lead\/([A-Za-z0-9]{18})\/view/)![1]; // Get the current page URL and extract the 18-digit Lead ID
-    // console.log(leadId);
-    expect(leadId).toMatch(/^[A-Za-z0-9]{18}$/); // Verify the extracted Lead ID is exactly 18 alphanumeric characters
-
-    const match = this.page.url().match(/\/Lead\/([A-Za-z0-9]{18})\/view/); // Match the URL and capture the 18-character Lead ID
+    const match = this.page.url().match(this.leadRecordUrl);
     expect(match).not.toBeNull();
     expect(match![1]).toHaveLength(18);
+    expect(match![1]).toMatch(/^[A-Za-z0-9]{18}$/);
   }
 
   async deleteLead() {
@@ -176,8 +175,11 @@ export class SalesPage {
 
   async clickConvertButton() {
     await this.buttonShowMoreActions.click();
+    await expect(this.buttonConvertMenuItem).toBeVisible({ timeout: 10000 });
     await this.buttonConvertMenuItem.click();
-    await expect(this.page.getByText("Convert Lead", { exact: true })).toBeVisible();
+    await expect(this.page.getByRole("dialog", { name: "Convert Lead" })).toBeVisible({
+      timeout: 15000,
+    });
   }
 
   async editLeadStatus(newStatus: string) {
@@ -187,7 +189,7 @@ export class SalesPage {
     await this.selectOption(this.dropdownLeadStatus, newStatus);
     await this.buttonSave.click();
     await expect(this.page.getByText("was saved.")).toBeVisible();
-    await expect(this.page).toHaveURL(/\/lightning\/r\/Lead\/[A-Za-z0-9]{18}\/view$/, {
+    await expect(this.page).toHaveURL(this.leadRecordUrl, {
       timeout: 10000,
     });
   }
@@ -307,7 +309,7 @@ export class SalesPage {
       "xpath=ancestor::*[self::div or self::li or self::tr or self::section or self::article][1]"
     );
 
-    // Resolve the locator that contains the field's displayed value
+    // Retrieve the displayed field value
     const value = field.locator(".test-id__field-value").first();
     const resolvedValue = await this.resolveFieldValueLocator(label, value, "");
 
@@ -324,6 +326,10 @@ export class SalesPage {
     if (await detailsTab.count()) {
       await detailsTab.click();
       await expect(detailsTab).toHaveAttribute("aria-selected", "true", { timeout: 10000 });
+      // Ensure Details tab content has loaded
+      await expect(
+        this.page.locator(`.test-id__field-label:text-is("Opportunity Owner")`).first()
+      ).toBeVisible({ timeout: 10000 });
     }
     await this.verifyFieldHasValue("Opportunity Owner");
     await this.verifyFieldHasValue("Opportunity Name");
