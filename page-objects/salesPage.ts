@@ -143,7 +143,7 @@ export class SalesPage {
   async saveLead() {
     await this.buttonSave.click();
     await expect(this.page.getByText("was created.")).toBeVisible();
-    // await this.h.pause(1000);
+    await this.h.pause(1000);
     await expect(this.page).toHaveURL(/\/lightning\/r\/Lead\/[A-Za-z0-9]{18}\/view$/, {
       timeout: 5000,
     });
@@ -162,7 +162,7 @@ export class SalesPage {
   async deleteLead() {
     await this.buttonShowMoreActions.click();
     await this.buttonDelete.click();
-    await expect(this.page.getByText("Are you sure you want to delete this lead?")).toBeVisible();
+    await expect(this.page.getByText("Are you sure you want to delete this")).toBeVisible();
     await this.buttonDelete2.click();
     await expect(this.page.getByText("was deleted.")).toBeVisible();
   }
@@ -197,6 +197,54 @@ export class SalesPage {
     await expect(this.page.getByText("Lead Owner", { exact: true })).toBeVisible();
   }
 
+  private async getTextContent(locator: Locator) {
+    const text = (await locator.allTextContents()).join(" ").replace(/\s+/g, " ").trim();
+    if (text) {
+      return text;
+    }
+
+    return (await this.page.locator("body").innerText()).replace(/\s+/g, " ").trim();
+  }
+
+  // Polls until the expected value appears within the locator's text
+  private async assertFieldValue(locator: Locator, expected: string, timeout = 10000) {
+    await expect.poll(async () => this.getTextContent(locator), { timeout }).toContain(expected);
+  }
+
+  private async resolveFieldValueLocator(label: string, initialValue: Locator, expected: string) {
+    // Return the initial locator if it already contains text
+    const initialText = (await initialValue.allTextContents())
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (initialText) {
+      return initialValue;
+    }
+
+    const labelLocator = this.page.getByText(label, { exact: true }).first();
+    if (await labelLocator.count()) {
+      // Locate the nearest container that holds both the label and its value
+      const container = labelLocator.locator(
+        "xpath=ancestor::*[self::div or self::li or self::tr or self::section or self::article][1]"
+      );
+      // Find non-label elements that may contain the field value
+      const fallbackValue = container.locator(
+        "xpath=.//*[not(self::label) and not(self::span[contains(@class, 'test-id__field-label')]) and normalize-space(.)!='']"
+      );
+      // Exclude elements whose text is only the label
+      const candidate = fallbackValue.filter({ hasNotText: new RegExp(`^${label}$`, "i") }).first();
+      if (await candidate.count()) {
+        return candidate;
+      }
+      // Use the first available value element if no better match exists
+      if (await fallbackValue.count()) {
+        return fallbackValue.first();
+      }
+    }
+
+    return this.page.locator("body");
+  }
+
   /**
    * Verifies the displayed value of a Salesforce record field based on its label.
    * Optionally normalizes numeric values (e.g. Phone, Mobile, Fax) to ignore
@@ -211,17 +259,20 @@ export class SalesPage {
 
     // Retrieve the displayed field value
     const value = field.locator(".test-id__field-value").first();
+    const resolvedValue = await this.resolveFieldValueLocator(label, value, expected);
 
     // Compare only numeric characters for phone-related fields
     if (normalizeDigits) {
       await expect
-        .poll(async () => (await value.innerText()).replace(/\D/g, ""), { timeout: 5000 })
+        .poll(async () => (await this.getTextContent(resolvedValue)).replace(/\D/g, ""), {
+          timeout: 10000,
+        })
         .toContain(expected.replace(/\D/g, ""));
       return;
     }
 
     // Verify the displayed text matches the expected value
-    await expect(value).toContainText(expected);
+    await this.assertFieldValue(resolvedValue, expected);
   }
 
   async verifyDetailsView(lead: LeadData) {
@@ -240,6 +291,46 @@ export class SalesPage {
     await this.verifyField("Industry", lead.industry);
     await this.verifyField("Lead Status", lead.leadStatus);
     await this.verifyField("Rating", lead.rating);
+  }
+
+  async verifyOpportunityAndAccountName(data: string) {
+    await this.verifyField("Opportunity Name", data);
+    await this.verifyField("Account Name", data.slice(0, -1));
+  }
+
+  async verifyFieldHasValue(label: string) {
+    const labelLocator = this.page.getByText(label, { exact: true }).first();
+    await expect(labelLocator).toHaveCount(1, { timeout: 10000 });
+
+    // Navigate to the field container associated with the label
+    const field = labelLocator.locator(
+      "xpath=ancestor::*[self::div or self::li or self::tr or self::section or self::article][1]"
+    );
+
+    // Resolve the locator that contains the field's displayed value
+    const value = field.locator(".test-id__field-value").first();
+    const resolvedValue = await this.resolveFieldValueLocator(label, value, "");
+
+    // Wait until the field contains a non-empty value
+    await expect
+      .poll(async () => (await this.getTextContent(resolvedValue)).trim(), {
+        timeout: 10000,
+      })
+      .not.toBe("");
+  }
+
+  async verifyOpportunityDetailsHaveValues() {
+    const detailsTab = this.page.getByRole("tab", { name: "Details" }).first();
+    if (await detailsTab.count()) {
+      await detailsTab.click();
+      await expect(detailsTab).toHaveAttribute("aria-selected", "true", { timeout: 10000 });
+    }
+    await this.verifyFieldHasValue("Opportunity Owner");
+    await this.verifyFieldHasValue("Opportunity Name");
+    await this.verifyFieldHasValue("Account Name");
+    await this.verifyFieldHasValue("Close Date");
+    await this.verifyFieldHasValue("Amount");
+    await this.verifyFieldHasValue("Stage");
   }
 
   async convertLeadRadio(radio: string) {

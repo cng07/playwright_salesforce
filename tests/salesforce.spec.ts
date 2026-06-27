@@ -110,9 +110,15 @@ test("Lead > Opportunity Conversion", async ({ page }) => {
   const opportunityName = await _page.getConvertLeadTextInputValue("Opportunity Name");
   await _page.clickConvertButtonOnConvertLeadModule();
 
+  // Validate Opportunity created successfully
+  // Navigate to the newly created Opportunity page
   await h.clickTab("Opportunities");
   await _page.clickOpportunityName(opportunityName);
 
-  // Delete the created lead
-  // await _page.deleteLead();
+  // Validate values
+  await _page.verifyOpportunityAndAccountName(opportunityName);
+  await _page.verifyOpportunityDetailsHaveValues();
+
+  // Delete the created opportunity
+  await _page.deleteLead();
 });
