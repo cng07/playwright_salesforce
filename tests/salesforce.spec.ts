@@ -18,7 +18,7 @@ test("Salesforce Login with OTP @runFirstLogin", async ({ page }) => {
   await _page.verifyDashboardPage();
 
   await page.context().storageState({
-    path: "playwright/.auth/salesforce.json",
+    path: "playwright/.auth/storageState.json",
   });
 });
 

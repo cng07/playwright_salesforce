@@ -39,7 +39,7 @@ export default defineConfig({
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
-    storageState: "playwright/.auth/salesforce.json",
+    storageState: "playwright/.auth/storageState.json",
   },
 
   /* Configure projects for major browsers */
