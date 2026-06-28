@@ -36,6 +36,7 @@ export default defineConfig({
       {
         name: "Salesforce Automation Report",
         outputFile: "./monocart-report/index.html",
+        json: false
       },
     ],
   ],
@@ -46,9 +47,9 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     headless: !!process.env.CI,
-    trace: "retain-on-failure",
+    trace: "on-first-retry",
     screenshot: "only-on-failure",
-    video: "retain-on-failure",
+    video: "off",
     storageState:
       process.env.USE_STORAGE_STATE === "false" ? undefined : "playwright/.auth/storageState.json",
   },
