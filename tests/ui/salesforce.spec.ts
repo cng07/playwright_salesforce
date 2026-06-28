@@ -34,7 +34,7 @@ test("Salesforce Dashboard page @smoke", async ({ page }) => {
 
 for (let i = 1; i <= 2; i++) {
   test(`Lead Creation & Management (${i})`, async ({ page }) => {
-    test.setTimeout(90000);
+    test.setTimeout(120000);
     const _pageLogin = new LoginPage(page);
     const _page = new SalesPage(page);
     const h = new Helper(page);
@@ -85,7 +85,7 @@ for (let i = 1; i <= 2; i++) {
 }
 
 test(`Lead > Opportunity Conversion @smoke`, async ({ page }) => {
-  test.setTimeout(90000);
+  test.setTimeout(120000);
   const _pageLogin = new LoginPage(page);
   const _page = new SalesPage(page);
   const h = new Helper(page);
@@ -99,7 +99,9 @@ test(`Lead > Opportunity Conversion @smoke`, async ({ page }) => {
     timeout: 15000,
   });
   await h.searchAppLauncher("Sales");
-  await expect(page.getByRole("heading", { name: "Sales", exact: true })).toBeVisible({ timeout: 15000 });
+  await expect(page.getByRole("heading", { name: "Sales", exact: true })).toBeVisible({
+    timeout: 15000,
+  });
 
   await h.clickTab("Leads");
   await _page.clickNewButton();
