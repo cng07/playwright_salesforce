@@ -55,6 +55,7 @@ export class Helper {
     await expect(this.page.getByRole("heading", { name: appName })).toBeVisible({
       timeout: 15000,
     });
+    await this.pause(2000);
   }
 
   async clickTab(tabName: string) {

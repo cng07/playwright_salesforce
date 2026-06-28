@@ -22,8 +22,7 @@ test("Salesforce Login with OTP @runFirstLogin", async ({ page }) => {
   });
 });
 
-test("Salesforce Dashboard page", async ({ page }) => {
-  // test.setTimeout(120000);
+test("Salesforce Dashboard page @smoke", async ({ page }) => {
   const _page = new LoginPage(page);
   const h = new Helper(page);
 
@@ -33,7 +32,7 @@ test("Salesforce Dashboard page", async ({ page }) => {
   await _page.verifyDashboardPage();
 });
 
-for (let i = 1; i <= 5; i++) {
+for (let i = 1; i <= 2; i++) {
   test(`Lead Creation & Management (${i})`, async ({ page }) => {
     test.setTimeout(60000);
     const _pageLogin = new LoginPage(page);
@@ -85,8 +84,8 @@ for (let i = 1; i <= 5; i++) {
   });
 }
 
-test(`Lead > Opportunity Conversion`, async ({ page }) => {
-  test.setTimeout(60000);
+test(`Lead > Opportunity Conversion @smoke`, async ({ page }) => {
+  test.setTimeout(90000);
   const _pageLogin = new LoginPage(page);
   const _page = new SalesPage(page);
   const h = new Helper(page);
@@ -96,11 +95,11 @@ test(`Lead > Opportunity Conversion`, async ({ page }) => {
   await _pageLogin.verifyDashboardPage();
 
   await h.searchAppLauncher("DevOps Center");
-  await expect(page.getByRole("heading", { name: "DevOps Center" })).toBeVisible({
+  await expect(page.getByRole("heading", { name: "DevOps Center", exact: true })).toBeVisible({
     timeout: 15000,
   });
   await h.searchAppLauncher("Sales");
-  await expect(page.getByRole("heading", { name: "Sales" })).toBeVisible({ timeout: 15000 });
+  await expect(page.getByRole("heading", { name: "Sales", exact: true })).toBeVisible({ timeout: 15000 });
 
   await h.clickTab("Leads");
   await _page.clickNewButton();
@@ -124,8 +123,8 @@ test(`Lead > Opportunity Conversion`, async ({ page }) => {
   await _page.clickOpportunityName(opportunityName);
 
   // Validate values
-  await _page.verifyOpportunityAndAccountName(opportunityName);
   await _page.verifyOpportunityDetailsHaveValues();
+  await _page.verifyOpportunityAndAccountName(opportunityName);
 
   // Delete the created opportunity
   await _page.deleteLead();

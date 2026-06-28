@@ -365,7 +365,7 @@ export class SalesPage {
       this.page.getByText("Your lead has been converted", { exact: true })
     ).toBeVisible();
     await this.page.getByRole("button", { name: "Go to Leads" }).click();
-    await expect(this.page.getByText("My Leads", { exact: true })).toBeVisible();
+    await expect(this.page.getByText("My Leads", { exact: true })).toBeVisible({timeout: 5000});
   }
 
   async getConvertLeadTextInputValue(fieldLabel: string): Promise<string> {
