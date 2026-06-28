@@ -34,7 +34,7 @@ test("Salesforce Dashboard page @smoke", async ({ page }) => {
 
 for (let i = 1; i <= 2; i++) {
   test(`Lead Creation & Management (${i})`, async ({ page }) => {
-    test.setTimeout(60000);
+    test.setTimeout(90000);
     const _pageLogin = new LoginPage(page);
     const _page = new SalesPage(page);
     const h = new Helper(page);

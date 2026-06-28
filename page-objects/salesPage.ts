@@ -93,6 +93,7 @@ export class SalesPage {
   async clickNewButton() {
     await this.buttonNew.click({ timeout: 10000 });
     await expect(this.page.getByText("New Lead")).toBeVisible();
+    await this.h.pause(1000);
   }
 
   async fillLeadForm(lead: LeadData) {
@@ -401,7 +402,7 @@ export class SalesPage {
   async verifyRequiredFieldErrors(lead: LeadData) {
     await expect(this.page.getByText("We hit a snag.", { exact: true })).toBeVisible();
     await expect(this.page.getByText("Review the following fields", { exact: true })).toBeVisible();
-    await expect(this.buttonError).toBeVisible();
+    await expect(this.buttonError.first()).toBeVisible();
 
     if (!lead.lastName?.trim()) {
       await expect(
