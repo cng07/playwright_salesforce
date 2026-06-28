@@ -52,8 +52,8 @@ export class Helper {
     const appOption = this.page.getByRole("option", { name: appName, exact: true });
     await expect(appOption).toBeVisible({ timeout: 20000 });
     await appOption.click();
-    await expect(this.page.getByRole("heading", { name: appName })).toBeVisible({
-      timeout: 15000,
+    await expect(this.page.getByRole("heading", { name: appName, exact: true })).toBeVisible({
+      timeout: 10000,
     });
     await this.pause(2000);
   }

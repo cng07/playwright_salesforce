@@ -16,17 +16,9 @@ test(`Lead Creation with missing mandatory fields`, async ({ page }) => {
   await _pageLogin.verifyDashboardPage();
 
   await h.searchAppLauncher("DevOps Center");
-  await expect(page.getByRole("heading", { name: "DevOps Center", exact: true })).toBeVisible({
-    timeout: 15000,
-  });
-
   await h.searchAppLauncher("Sales");
-  await expect(page.getByRole("heading", { name: "Sales", exact: true })).toBeVisible({
-    timeout: 15000,
-  });
 
   await h.clickTab("Leads");
-
   await _page.clickNewButton();
   await _page.clickSaveButton();
 

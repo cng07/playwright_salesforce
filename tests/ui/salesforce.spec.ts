@@ -46,15 +46,8 @@ for (let i = 1; i <= 2; i++) {
     await _pageLogin.verifyDashboardPage();
 
     await h.searchAppLauncher("DevOps Center");
-    await expect(page.getByRole("heading", { name: "DevOps Center", exact: true })).toBeVisible({
-      timeout: 15000,
-    });
-
     // Search for "Sales" App via App Launcher
     await h.searchAppLauncher("Sales");
-    await expect(page.getByRole("heading", { name: "Sales", exact: true })).toBeVisible({
-      timeout: 15000,
-    });
 
     // Open Leads tab
     await h.clickTab("Leads");
@@ -95,13 +88,7 @@ test(`Lead > Opportunity Conversion @smoke`, async ({ page }) => {
   await _pageLogin.verifyDashboardPage();
 
   await h.searchAppLauncher("DevOps Center");
-  await expect(page.getByRole("heading", { name: "DevOps Center", exact: true })).toBeVisible({
-    timeout: 15000,
-  });
   await h.searchAppLauncher("Sales");
-  await expect(page.getByRole("heading", { name: "Sales", exact: true })).toBeVisible({
-    timeout: 15000,
-  });
 
   await h.clickTab("Leads");
   await _page.clickNewButton();
