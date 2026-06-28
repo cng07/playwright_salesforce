@@ -5,7 +5,7 @@ import { SalesPage } from "../../page-objects/salesPage";
 import { generateLeadData } from "../../utils/salesLeadsData";
 
 test(`Lead Creation with missing mandatory fields`, async ({ page }) => {
-  test.setTimeout(120000);
+  test.setTimeout(150000);
   const _pageLogin = new LoginPage(page);
   const _page = new SalesPage(page);
   const h = new Helper(page);

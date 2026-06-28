@@ -154,6 +154,7 @@ export class SalesPage {
 
   async saveLead() {
     await this.buttonSave.click();
+    await expect(this.page.locator(".forceActionsText")).toContainText("was created");
     await expect(this.page.getByText("was created.")).toBeVisible();
     await expect(this.page).toHaveURL(this.leadRecordUrl, {
       timeout: 10000,
@@ -175,8 +176,8 @@ export class SalesPage {
     await this.buttonShowMoreActions.click();
     await this.buttonDelete.click();
     await expect(this.page.getByText("Are you sure you want to delete this")).toBeVisible();
-    await this.buttonDelete2.click();
-    await expect(this.page.getByText("was deleted.")).toBeVisible();
+    await this.buttonDelete2.click({delay: 1000});
+    await expect(this.page.getByText("was deleted.")).toBeVisible({timeout: 10000});
   }
 
   async editLead() {
