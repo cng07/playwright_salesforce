@@ -56,21 +56,31 @@ test("Create Lead @runSolo", async ({ page }) => {
 });
 ```
 
-Run only that tagged test with specific browser(s):
+Run only that tagged test with a specific browser:
 
 ```bash
 npx playwright test --grep "@runSolo" --project=chromium
 ```
 
-## Viewing the report
+## Viewing the reports
 
-After the test run finishes:
+### Local execution
+
+After the test run finishes, open the Monocart report:
 
 ```bash
-npx playwright show-report
+npx monocart show-report monocart-report/index.html
 ```
 
-If Monocart Reporter is enabled, open the generated `index.html` file inside the `monocart-report` folder.
+### Online report
+
+The latest published reports are also available here:
+
+- https://carlosng07.vercel.app/test-reports
+
+Report name:
+
+- **playwright_salesforce Test Report**
 
 ---
 
@@ -90,6 +100,34 @@ Before running any workflow, make sure a valid `storageState.json` has been gene
 
 4. If GitHub blocks the push because it contains authentication data, manually approve the push in GitHub.
 
-5. After the file has been pushed successfully, run the GitHub Actions workflow.
+5. Open the GitHub Actions workflow:
+
+   https://github.com/cng07/playwright_salesforce/actions/workflows/playwright.yml
+
+6. Click **Run workflow**.
+
+7. (Optional) Enter a tag in the **Test tags to filter** field.
+
+   Example:
+
+   ```
+   @smoke
+   ```
+
+   Leave it blank to run all tests.
+
+8. Update the workflow options as needed:
+
+   - Browser project to run
+   - Number of parallel workers
+   - Number of retries for failed tests
+
+9. Click **Run workflow**.
+
+10. After the workflow completes, download the generated Monocart report from the workflow artifacts.
+
+The latest GitHub Actions report is also published here:
+
+- https://carlosng07.vercel.app/test-reports
 
 > **Note:** You cannot run `test:setupLogin` in GitHub Actions because it requires manual OTP verification. Run only the remaining test suites after the storage state has been updated.
