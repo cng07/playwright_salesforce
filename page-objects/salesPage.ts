@@ -92,7 +92,7 @@ export class SalesPage {
 
   async clickNewButton() {
     await this.buttonNew.click({ timeout: 10000 });
-    await expect(this.page.getByText("New Lead")).toBeVisible();
+    await expect(this.page.getByText("New Lead", { exact: true })).toBeVisible({ timeout: 10000 });
     await this.h.pause(1000);
   }
 
@@ -366,7 +366,7 @@ export class SalesPage {
       this.page.getByText("Your lead has been converted", { exact: true })
     ).toBeVisible();
     await this.page.getByRole("button", { name: "Go to Leads" }).click();
-    await expect(this.page.getByText("My Leads", { exact: true })).toBeVisible({timeout: 5000});
+    await expect(this.page.getByText("My Leads", { exact: true })).toBeVisible({ timeout: 5000 });
   }
 
   async getConvertLeadTextInputValue(fieldLabel: string): Promise<string> {
@@ -400,7 +400,9 @@ export class SalesPage {
   }
 
   async verifyRequiredFieldErrors(lead: LeadData) {
-    await expect(this.page.getByText("We hit a snag.", { exact: true })).toBeVisible();
+    await expect(this.page.getByText("We hit a snag.", { exact: true })).toBeVisible({
+      timeout: 10000,
+    });
     await expect(this.page.getByText("Review the following fields", { exact: true })).toBeVisible();
     await expect(this.buttonError.first()).toBeVisible();
 
