@@ -36,6 +36,8 @@ export class SalesPage {
   buttonSaveAndNew: Locator;
   buttonConvertMenuItem: Locator;
   buttonConvert: Locator;
+  buttonError: Locator;
+  buttonClose: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -72,6 +74,8 @@ export class SalesPage {
     this.buttonSaveAndNew = this.page.getByRole("button", { name: "Save & New" });
     this.buttonConvertMenuItem = this.page.getByRole("menuitem", { name: "Convert" });
     this.buttonConvert = this.page.getByRole("button", { name: "Convert" });
+    this.buttonError = this.page.getByRole("button", { name: "Error" });
+    this.buttonClose = this.page.locator(`button[title='Cancel and close']`);
   }
 
   async verifyDashboardPage() {
@@ -105,6 +109,10 @@ export class SalesPage {
     await this.textFieldNoOfEmployees.fill(lead.numberOfEmployees);
 
     await this.fillLeadFormDropdownV2(lead);
+  }
+
+  async fillLeadTextField(field: Locator, value: string) {
+    await field.fill(value);
   }
 
   async fillLeadFormDropdown(lead: LeadData) {
@@ -149,6 +157,10 @@ export class SalesPage {
     await expect(this.page).toHaveURL(this.leadRecordUrl, {
       timeout: 10000,
     });
+  }
+
+  async clickSaveButton() {
+    await this.buttonSave.click();
   }
 
   async verifyUniqueLeadId() {
@@ -372,5 +384,54 @@ export class SalesPage {
     await expect(this.page.getByRole("button", { name: "Mark Stage as Complete" })).toBeVisible({
       timeout: 3000,
     });
+  }
+
+  private errorIcon(field: Locator) {
+    return field.locator(
+      "xpath=ancestor::div[contains(@class,'slds-form-element__control')][1]//svg[@data-key='error']"
+    );
+  }
+
+  private requiredFieldMessage(field: Locator) {
+    return field.locator(
+      "xpath=ancestor::*[contains(@class,'slds-form-element')][1]//*[normalize-space()='Complete this field.']"
+    );
+  }
+
+  async verifyRequiredFieldErrors(lead: LeadData) {
+    await expect(this.page.getByText("We hit a snag.", { exact: true })).toBeVisible();
+    await expect(this.page.getByText("Review the following fields", { exact: true })).toBeVisible();
+    await expect(this.buttonError).toBeVisible();
+
+    if (!lead.lastName?.trim()) {
+      await expect(
+        this.page.locator(
+          `//strong[contains(., 'Review the following fields')]/following::a[normalize-space()='Name']`
+        )
+      ).toBeVisible();
+
+      await expect(this.textFieldLastName).toHaveAttribute("aria-invalid", "true");
+      await expect(this.errorIcon(this.textFieldLastName)).toBeVisible();
+      await expect(this.requiredFieldMessage(this.textFieldLastName)).toBeVisible();
+    }
+
+    if (!lead.company?.trim()) {
+      await expect(
+        this.page.locator(
+          `//strong[contains(., 'Review the following fields')]/following::a[normalize-space()='Company']`
+        )
+      ).toBeVisible();
+
+      await expect(this.textFieldCompany).toHaveAttribute("aria-invalid", "true");
+      await expect(this.errorIcon(this.textFieldCompany)).toBeVisible();
+      await expect(this.requiredFieldMessage(this.textFieldCompany)).toBeVisible();
+    }
+  }
+
+  async clickCloseButton() {
+    await expect(this.buttonClose).toBeVisible();
+    await this.buttonClose.click({ force: true });
+    await expect(this.buttonSaveAndNew).not.toBeVisible();
+    await this.h.pause(1000);
   }
 }
