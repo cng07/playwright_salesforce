@@ -12,281 +12,464 @@
 # Error details
 
 ```
-Test timeout of 120000ms exceeded.
+Error: Test timeout of 120000ms exceeded
 ```
 
-```
-Error: expect(locator).toBeVisible() failed
-
-Locator:  getByText('was saved.')
-Expected: visible
-Received: hidden
-Timeout:  5000ms
-
-Call log:
-  - Expect "toBeVisible" with timeout 5000ms
-  - waiting for getByText('was saved.')
-    2 × locator resolved to <span data-aura-rendered-by="2270:0" data-aura-class="forceActionsText" class="toastMessage slds-text-heading--small forceActionsText">Lead "Ms. Roderick Ullrich" was saved.</span>
-      - unexpected value "hidden"
-
-```
+# Page snapshot
 
 ```yaml
-- link "Skip to Navigation":
-  - /url: javascript:void(0);
-- link "Skip to Main Content":
-  - /url: javascript:void(0);
-- button "Toggle Panel": Menu
-- text: Developer Edition
-- button "Show menu"
-- button "Search": Search...
-- navigation "Global Header":
-  - list:
-    - listitem:
-      - group:
-        - button "Add favorite":
-          - tooltip "Add favorite"
-        - button "Favorites list":
-          - tooltip "Favorites list"
-    - listitem:
-      - button "Global Actions":
-        - tooltip "Global Actions"
-    - listitem:
-      - button "Guidance Center":
-        - tooltip "Guidance Center"
-    - listitem:
-      - button "Salesforce Help":
-        - tooltip "Salesforce Help"
-    - listitem:
-      - button "Setup":
-        - tooltip "Setup"
-    - listitem:
-      - button "Notifications":
-        - tooltip "Notifications"
-    - listitem:
-      - button "View profile":
-        - tooltip "View profile"
-- navigation "App":
-  - button "App Launcher"
-- heading "Sales" [level=1]
-- navigation "Global":
-  - list:
-    - listitem:
-      - link "Home":
-        - /url: /lightning/page/home
-    - listitem:
-      - link "Opportunities":
-        - /url: /lightning/o/Opportunity/home
-      - button "Opportunities List"
-    - listitem:
-      - link "Leads":
-        - /url: /lightning/o/Lead/home
-      - button "Leads List"
-    - listitem:
-      - link "Tasks":
-        - /url: /lightning/o/Task/home
-      - button "Tasks List"
-    - listitem:
-      - link "Files":
-        - /url: /lightning/o/ContentDocument/home
-      - button "Files List"
-    - listitem:
-      - link "Accounts":
-        - /url: /lightning/o/Account/home
-      - button "Accounts List"
-    - listitem:
-      - link "Contacts":
-        - /url: /lightning/o/Contact/home
-      - button "Contacts List"
-    - listitem:
-      - link "Campaigns":
-        - /url: /lightning/o/Campaign/home
-      - button "Campaigns List"
-    - listitem:
-      - link "Dashboards":
-        - /url: /lightning/o/Dashboard/home
-      - button "Dashboards List"
-    - listitem:
-      - button "Show more navigation items"
-    - listitem:
-      - button "Edit nav items"
-- main:
-  - heading "Lead Ms. Roderick Ullrich" [level=1]
-  - button "Follow"
-  - button "New Case"
-  - button "New Note"
-  - button "Submit for Approval"
-  - button "Show more actions"
-  - paragraph: Title
-  - paragraph: Lead Operations Agent
-  - paragraph: Company
-  - paragraph: Blick - Luettgen
-  - button "Phone (2)":
-    - paragraph: Phone (2)
-  - list:
-    - paragraph:
-      - link "(025) 833-2165":
-        - /url: tel:0258332165
-  - paragraph: Email
-  - paragraph:
-    - link "roderick.ullrich78@hotmail.com":
-      - /url: mailto:roderick.ullrich78@hotmail.com
-  - article:
-    - heading "Path" [level=2]
-    - listbox "Path Options":
-      - option "stage complete Open - Not Contacted"
-      - option "stage complete Working - Contacted"
-      - option "stage complete Closed - Not Converted"
-      - option "Closed - Converted" [selected]
-    - button "Change Converted Status"
-  - heading "Tabs" [level=2]
-  - heading "Tabs" [level=2]
-  - tablist "Tabs":
-    - tab "Activity"
-    - tab "Details" [selected]
-    - tab "Chatter"
-  - tabpanel "Details":
-    - list:
-      - listitem:
-        - text: Lead Owner
-        - link "Carlos Ng":
-          - /url: /lightning/r/Name/005g5000008nNjdAAE/view
-        - button "Preview"
-        - button "Change Owner"
-      - listitem:
-        - text: Phone
-        - link "(025) 833-2165":
-          - /url: tel:0258332165
-        - button "Edit Phone"
-      - listitem:
-        - text: Name Ms. Roderick Ullrich
-        - button "Edit Name"
-      - listitem:
-        - text: Mobile
-        - link "09279758540":
-          - /url: tel:09279758540
-        - button "Edit Mobile"
-      - listitem:
-        - text: Company Blick - Luettgen
-        - button "Edit Company"
-      - listitem:
-        - text: Fax
-        - link "(811) 167-3874":
-          - /url: tel:8111673874
-        - button "Edit Fax"
-      - listitem:
-        - text: Title Lead Operations Agent
-        - button "Edit Title"
-      - listitem:
-        - text: Email
-        - link "roderick.ullrich78@hotmail.com":
-          - /url: mailto:roderick.ullrich78@hotmail.com
-        - button "Edit Email"
-      - listitem:
-        - text: Lead Source Partner Referral
-        - button "Edit Lead Source"
-      - listitem:
-        - text: Website
-        - link "https://infinite-louse.org/":
-          - /url: https://infinite-louse.org/
-        - button "Edit Website"
-      - listitem:
-        - text: Industry Retail
-        - button "Edit Industry"
-      - listitem:
-        - text: Lead Status Closed - Converted
-        - button "Edit Lead Status"
-      - listitem:
-        - text: Annual Revenue $959
-        - button "Edit Annual Revenue"
-      - listitem:
-        - text: Rating Hot
-        - button "Edit Rating"
-      - listitem:
-        - text: No. of Employees 688
-        - button "Edit No. of Employees"
-    - list:
-      - listitem:
-        - text: Address
-        - button "Edit Address"
-    - list:
-      - listitem:
-        - text: Product Interest
-        - button "Edit Product Interest"
-      - listitem:
-        - text: Current Generator(s)
-        - button "Edit Current Generator(s)"
-      - listitem:
-        - text: SIC Code
-        - button "Edit SIC Code"
-      - listitem:
-        - text: Primary
-        - button "Edit Primary"
-      - listitem:
-        - text: Number of Locations
-        - button "Edit Number of Locations"
-    - list:
-      - listitem:
-        - text: Created By
-        - link "Carlos Ng":
-          - /url: /lightning/r/User/005g5000008nNjdAAE/view
-        - button "Preview"
-        - text: ", 6/28/2026, 7:57 AM"
-      - listitem:
-        - text: Last Modified By
-        - link "Carlos Ng":
-          - /url: /lightning/r/User/005g5000008nNjdAAE/view
-        - button "Preview"
-        - text: ", 6/28/2026, 7:57 AM"
-    - list:
-      - listitem:
-        - text: Description
-        - button "Edit Description"
-  - heading "Tabs" [level=2]
-  - heading "Tabs" [level=2]
-  - tablist "Tabs":
-    - tab "Related" [selected]
-  - tabpanel "Related":
-    - article: We found no potential duplicates of this Lead.
-    - article "Campaign History":
-      - heading "Campaign History (0)" [level=2]:
-        - link "Campaign History (0)":
-          - /url: /lightning/r/Lead/00Qg5000005MOqPEAW/related/CampaignMembers/view
-      - button "Show actions for Campaign History"
-- contentinfo "Utility Bar":
-  - list:
-    - listitem:
-      - button "To Do List"
-- text: Success notification. Lead "Ms. Roderick Ullrich" was saved. Press Control + F6 to navigate to the next toast notification or focusable region.
-- button "Close"
-- status
+- generic:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "Skip to Navigation" [ref=e4] [cursor=pointer]:
+        - /url: javascript:void(0);
+      - link "Skip to Main Content" [ref=e5] [cursor=pointer]:
+        - /url: javascript:void(0);
+      - generic [ref=e9]:
+        - generic [ref=e13]:
+          - button "Toggle Panel" [ref=e17] [cursor=pointer]:
+            - img [ref=e21]
+            - generic [ref=e24]: Menu
+          - generic [ref=e29]:
+            - img [ref=e33]
+            - generic [ref=e36]: Developer Edition
+        - button "Show menu" [ref=e45] [cursor=pointer]:
+          - img [ref=e47]
+          - generic [ref=e50]: Show menu
+      - generic [ref=e51]:
+        - button "Search" [ref=e57]:
+          - img [ref=e59]
+          - text: Search...
+        - navigation "Global Header" [ref=e62]:
+          - list [ref=e64]:
+            - listitem [ref=e65]:
+              - group [ref=e66]:
+                - button "Add favorite" [ref=e68] [cursor=pointer]:
+                  - generic [ref=e69]:
+                    - img [ref=e73]
+                    - tooltip "Add favorite"
+                - button "Favorites list" [ref=e77] [cursor=pointer]:
+                  - generic [ref=e78]:
+                    - img [ref=e82]
+                    - tooltip "Favorites list"
+            - listitem [ref=e85]:
+              - button "Global Actions" [ref=e91] [cursor=pointer]:
+                - generic [ref=e92]:
+                  - img [ref=e96]
+                  - tooltip "Global Actions"
+            - listitem [ref=e99]:
+              - button "Guidance Center" [ref=e101] [cursor=pointer]:
+                - generic [ref=e102]:
+                  - img [ref=e106]
+                  - tooltip "Guidance Center"
+            - listitem [ref=e109]:
+              - button "Salesforce Help" [ref=e112] [cursor=pointer]:
+                - generic [ref=e113]:
+                  - img [ref=e117]
+                  - tooltip "Salesforce Help"
+            - listitem [ref=e120]:
+              - button "Setup" [ref=e126] [cursor=pointer]:
+                - generic [ref=e127]:
+                  - img [ref=e131]
+                  - tooltip "Setup"
+            - listitem [ref=e134]:
+              - button "Notifications" [ref=e137] [cursor=pointer]:
+                - generic [ref=e138]:
+                  - img [ref=e143]
+                  - tooltip "Notifications"
+            - listitem [ref=e147]:
+              - button "View profile" [ref=e150] [cursor=pointer]:
+                - generic [ref=e151]:
+                  - tooltip "View profile"
+    - generic [ref=e155]:
+      - generic [ref=e158]:
+        - generic [ref=e160]:
+          - navigation "App" [ref=e161]:
+            - button "App Launcher" [ref=e163] [cursor=pointer]:
+              - generic [ref=e174]: App Launcher
+          - heading "Sales" [level=1] [ref=e175]:
+            - generic "Sales" [ref=e176]
+        - navigation "Global" [ref=e179]:
+          - list [ref=e180]:
+            - listitem [ref=e181]:
+              - link "Home" [ref=e182] [cursor=pointer]:
+                - /url: /lightning/page/home
+                - generic [ref=e183]: Home
+            - listitem [ref=e184]:
+              - link "Opportunities" [ref=e185] [cursor=pointer]:
+                - /url: /lightning/o/Opportunity/home
+                - generic [ref=e186]: Opportunities
+              - button "Opportunities List" [ref=e190] [cursor=pointer]:
+                - img [ref=e194]
+                - generic [ref=e197]: Opportunities List
+            - listitem [ref=e198] [cursor=pointer]:
+              - link "Leads" [ref=e199]:
+                - /url: /lightning/o/Lead/home
+                - generic [ref=e200]: Leads
+              - button "Leads List" [ref=e204]:
+                - img [ref=e208]
+                - generic [ref=e211]: Leads List
+            - listitem [ref=e212]:
+              - link "Tasks" [ref=e213] [cursor=pointer]:
+                - /url: /lightning/o/Task/home
+                - generic [ref=e214]: Tasks
+              - button "Tasks List" [ref=e218] [cursor=pointer]:
+                - img [ref=e222]
+                - generic [ref=e225]: Tasks List
+            - listitem [ref=e226]:
+              - link "Files" [ref=e227] [cursor=pointer]:
+                - /url: /lightning/o/ContentDocument/home
+                - generic [ref=e228]: Files
+              - button "Files List" [ref=e232] [cursor=pointer]:
+                - img [ref=e236]
+                - generic [ref=e239]: Files List
+            - listitem [ref=e240]:
+              - link "Accounts" [ref=e241] [cursor=pointer]:
+                - /url: /lightning/o/Account/home
+                - generic [ref=e242]: Accounts
+              - button "Accounts List" [ref=e246] [cursor=pointer]:
+                - img [ref=e250]
+                - generic [ref=e253]: Accounts List
+            - listitem [ref=e254]:
+              - link "Contacts" [ref=e255] [cursor=pointer]:
+                - /url: /lightning/o/Contact/home
+                - generic [ref=e256]: Contacts
+              - button "Contacts List" [ref=e260] [cursor=pointer]:
+                - img [ref=e264]
+                - generic [ref=e267]: Contacts List
+            - listitem [ref=e268]:
+              - link "Campaigns" [ref=e269] [cursor=pointer]:
+                - /url: /lightning/o/Campaign/home
+                - generic [ref=e270]: Campaigns
+              - button "Campaigns List" [ref=e274] [cursor=pointer]:
+                - img [ref=e278]
+                - generic [ref=e281]: Campaigns List
+            - listitem [ref=e282]:
+              - link "Dashboards" [ref=e283] [cursor=pointer]:
+                - /url: /lightning/o/Dashboard/home
+                - generic [ref=e284]: Dashboards
+              - button "Dashboards List" [ref=e288] [cursor=pointer]:
+                - img [ref=e292]
+                - generic [ref=e295]: Dashboards List
+            - listitem [ref=e296]:
+              - button "Show more navigation items" [ref=e298] [cursor=pointer]:
+                - generic [ref=e299]: More
+                - img [ref=e303]
+                - generic [ref=e306]: Show more navigation items
+            - listitem [ref=e307]:
+              - button "Edit nav items" [ref=e309] [cursor=pointer]:
+                - img [ref=e311]
+                - generic [ref=e314]: Edit nav items
+      - main [ref=e316]:
+        - generic [ref=e332]:
+          - generic [ref=e341]:
+            - generic [ref=e342]:
+              - heading "Lead Dr. Cornell Breitenberg" [level=1] [ref=e350]:
+                - generic [ref=e352]: Lead
+                - generic [ref=e353]: Dr. Cornell Breitenberg
+              - button "Follow" [ref=e358] [cursor=pointer]:
+                - generic [ref=e359]:
+                  - img [ref=e363]
+                  - text: Follow
+              - generic [ref=e368]:
+                - generic "New Case" [ref=e369]:
+                  - button "New Case" [ref=e374] [cursor=pointer]
+                - generic "New Note" [ref=e375]:
+                  - button "New Note" [ref=e380] [cursor=pointer]
+                - generic "Submit for Approval" [ref=e381]:
+                  - button "Submit for Approval" [ref=e386] [cursor=pointer]
+                - button "Show more actions" [ref=e388] [cursor=pointer]:
+                  - img [ref=e390]
+                  - generic [ref=e393]: Show more actions
+            - generic [ref=e394]:
+              - generic [ref=e396]:
+                - paragraph [ref=e397]: Title
+                - paragraph [ref=e398]:
+                  - generic [ref=e399]: Corporate Interactions Associate
+              - generic [ref=e401]:
+                - paragraph [ref=e402]: Company
+                - paragraph [ref=e403]:
+                  - generic [ref=e404]: Bosco, Wunsch and Ryan
+              - generic [ref=e406]:
+                - button "Phone (2)" [ref=e407] [cursor=pointer]:
+                  - paragraph [ref=e408]:
+                    - text: Phone (2)
+                    - img [ref=e413]
+                - list [ref=e416]:
+                  - paragraph [ref=e420]:
+                    - link "(028) 883-3422" [ref=e424] [cursor=pointer]:
+                      - /url: tel:0288833422
+              - generic [ref=e426]:
+                - paragraph [ref=e427]: Email
+                - paragraph [ref=e428]:
+                  - link "cornell_breitenberg@hotmail.com" [ref=e433] [cursor=pointer]:
+                    - /url: mailto:cornell_breitenberg@hotmail.com
+          - article [ref=e442]:
+            - generic [ref=e443]:
+              - heading "Path" [level=2] [ref=e444]
+              - generic [ref=e447]:
+                - listbox "Path Options" [ref=e452]:
+                  - option "stage complete Open - Not Contacted" [ref=e453] [cursor=pointer]:
+                    - generic [ref=e456]:
+                      - img [ref=e458]
+                      - generic [ref=e461]: stage complete
+                    - generic [ref=e462]: Open - Not Contacted
+                  - option "stage complete Working - Contacted" [ref=e463] [cursor=pointer]:
+                    - generic [ref=e466]:
+                      - img [ref=e468]
+                      - generic [ref=e471]: stage complete
+                    - generic [ref=e472]: Working - Contacted
+                  - option "stage complete Closed - Not Converted" [ref=e473] [cursor=pointer]:
+                    - generic [ref=e476]:
+                      - img [ref=e478]
+                      - generic [ref=e481]: stage complete
+                    - generic [ref=e482]: Closed - Not Converted
+                  - option "Closed - Converted" [selected] [ref=e483] [cursor=pointer]:
+                    - generic [ref=e484]: Closed - Converted
+                - button "Change Converted Status" [ref=e486] [cursor=pointer]:
+                  - generic [ref=e487]: Change Converted Status
+          - generic [ref=e488]:
+            - generic [ref=e494]:
+              - heading "Tabs" [level=2] [ref=e495]
+              - generic "Tabs" [ref=e496]:
+                - generic [ref=e497]:
+                  - heading "Tabs" [level=2] [ref=e498]
+                  - tablist "Tabs" [ref=e500]:
+                    - tab "Activity" [ref=e501] [cursor=pointer]
+                    - tab "Details" [active] [selected] [ref=e502] [cursor=pointer]
+                    - tab "Chatter" [ref=e503] [cursor=pointer]
+                  - tabpanel "Details" [ref=e506]:
+                    - generic [ref=e519]:
+                      - list [ref=e523]:
+                        - generic [ref=e524]:
+                          - generic [ref=e526]:
+                            - listitem [ref=e528]:
+                              - generic [ref=e529]:
+                                - generic [ref=e530]: Lead Owner
+                                - generic [ref=e535]:
+                                  - generic [ref=e542]:
+                                    - link "Carlos Ng" [ref=e543] [cursor=pointer]:
+                                      - /url: /lightning/r/Name/005g5000008nNjdAAE/view
+                                      - generic [ref=e547]: Carlos Ng
+                                    - button "Preview" [ref=e549] [cursor=pointer]:
+                                      - img [ref=e551]
+                                      - generic [ref=e554]: Preview
+                                  - button "Change Owner" [ref=e556] [cursor=pointer]:
+                                    - img [ref=e558]
+                                    - generic [ref=e561]: Change Owner
+                            - listitem [ref=e563]:
+                              - generic [ref=e564]:
+                                - generic [ref=e565]: Phone
+                                - generic [ref=e566]:
+                                  - link "(028) 883-3422" [ref=e571] [cursor=pointer]:
+                                    - /url: tel:0288833422
+                                  - button "Edit Phone" [ref=e572] [cursor=pointer]:
+                                    - generic [ref=e574]: Edit Phone
+                          - generic [ref=e576]:
+                            - listitem [ref=e578]:
+                              - generic [ref=e579]:
+                                - generic [ref=e580]: Name
+                                - generic [ref=e581]:
+                                  - generic [ref=e583]: Dr. Cornell Breitenberg
+                                  - button "Edit Name" [ref=e584] [cursor=pointer]:
+                                    - generic [ref=e586]: Edit Name
+                            - listitem [ref=e588]:
+                              - generic [ref=e589]:
+                                - generic [ref=e590]: Mobile
+                                - generic [ref=e591]:
+                                  - link "09117426170" [ref=e596] [cursor=pointer]:
+                                    - /url: tel:09117426170
+                                  - button "Edit Mobile" [ref=e597] [cursor=pointer]:
+                                    - generic [ref=e599]: Edit Mobile
+                          - generic [ref=e601]:
+                            - listitem [ref=e603]:
+                              - generic [ref=e604]:
+                                - generic [ref=e605]: Company
+                                - generic [ref=e606]:
+                                  - generic [ref=e608]: Bosco, Wunsch and Ryan
+                                  - button "Edit Company" [ref=e609] [cursor=pointer]:
+                                    - generic [ref=e611]: Edit Company
+                            - listitem [ref=e613]:
+                              - generic [ref=e614]:
+                                - generic [ref=e615]: Fax
+                                - generic [ref=e616]:
+                                  - link "(508) 218-1714" [ref=e621] [cursor=pointer]:
+                                    - /url: tel:5082181714
+                                  - button "Edit Fax" [ref=e622] [cursor=pointer]:
+                                    - generic [ref=e624]: Edit Fax
+                          - generic [ref=e626]:
+                            - listitem [ref=e628]:
+                              - generic [ref=e629]:
+                                - generic [ref=e630]: Title
+                                - generic [ref=e631]:
+                                  - generic [ref=e633]: Corporate Interactions Associate
+                                  - button "Edit Title" [ref=e634] [cursor=pointer]:
+                                    - generic [ref=e636]: Edit Title
+                            - listitem [ref=e638]:
+                              - generic [ref=e639]:
+                                - generic [ref=e640]: Email
+                                - generic [ref=e641]:
+                                  - link "cornell_breitenberg@hotmail.com" [ref=e647] [cursor=pointer]:
+                                    - /url: mailto:cornell_breitenberg@hotmail.com
+                                  - button "Edit Email" [ref=e648] [cursor=pointer]:
+                                    - generic [ref=e650]: Edit Email
+                          - generic [ref=e652]:
+                            - listitem [ref=e654]:
+                              - generic [ref=e655]:
+                                - generic [ref=e656]: Lead Source
+                                - generic [ref=e657]:
+                                  - generic [ref=e659]: Web
+                                  - button "Edit Lead Source" [ref=e660] [cursor=pointer]:
+                                    - generic [ref=e662]: Edit Lead Source
+                            - listitem [ref=e664]:
+                              - generic [ref=e665]:
+                                - generic [ref=e666]: Website
+                                - generic [ref=e667]:
+                                  - link "https://rowdy-commercial.biz/" [ref=e671] [cursor=pointer]:
+                                    - /url: https://rowdy-commercial.biz/
+                                  - button "Edit Website" [ref=e672] [cursor=pointer]:
+                                    - generic [ref=e674]: Edit Website
+                          - generic [ref=e676]:
+                            - listitem [ref=e678]:
+                              - generic [ref=e679]:
+                                - generic [ref=e680]: Industry
+                                - generic [ref=e681]:
+                                  - generic [ref=e683]: Electronics
+                                  - button "Edit Industry" [ref=e684] [cursor=pointer]:
+                                    - generic [ref=e686]: Edit Industry
+                            - listitem [ref=e688]:
+                              - generic [ref=e689]:
+                                - generic [ref=e690]: Lead Status
+                                - generic [ref=e691]:
+                                  - generic [ref=e693]: Closed - Converted
+                                  - button "Edit Lead Status" [ref=e694] [cursor=pointer]:
+                                    - generic [ref=e696]: Edit Lead Status
+                          - generic [ref=e698]:
+                            - listitem [ref=e700]:
+                              - generic [ref=e701]:
+                                - generic [ref=e702]: Annual Revenue
+                                - generic [ref=e703]:
+                                  - generic [ref=e705]: $888
+                                  - button "Edit Annual Revenue" [ref=e706] [cursor=pointer]:
+                                    - generic [ref=e708]: Edit Annual Revenue
+                            - listitem [ref=e710]:
+                              - generic [ref=e711]:
+                                - generic [ref=e712]: Rating
+                                - generic [ref=e713]:
+                                  - generic [ref=e715]: Warm
+                                  - button "Edit Rating" [ref=e716] [cursor=pointer]:
+                                    - generic [ref=e718]: Edit Rating
+                          - listitem [ref=e723]:
+                            - generic [ref=e724]:
+                              - generic [ref=e725]: No. of Employees
+                              - generic [ref=e726]:
+                                - generic [ref=e728]: "945"
+                                - button "Edit No. of Employees" [ref=e729] [cursor=pointer]:
+                                  - generic [ref=e731]: Edit No. of Employees
+                      - list [ref=e735]:
+                        - listitem [ref=e740]:
+                          - generic [ref=e741]:
+                            - generic [ref=e742]: Address
+                            - button "Edit Address" [ref=e744] [cursor=pointer]:
+                              - generic [ref=e746]: Edit Address
+                      - list [ref=e751]:
+                        - generic [ref=e752]:
+                          - generic [ref=e754]:
+                            - listitem [ref=e756]:
+                              - generic [ref=e757]:
+                                - generic [ref=e758]: Product Interest
+                                - button "Edit Product Interest" [ref=e760] [cursor=pointer]:
+                                  - generic [ref=e762]: Edit Product Interest
+                            - listitem [ref=e764]:
+                              - generic [ref=e765]:
+                                - generic [ref=e766]: Current Generator(s)
+                                - button "Edit Current Generator(s)" [ref=e768] [cursor=pointer]:
+                                  - generic [ref=e770]: Edit Current Generator(s)
+                          - generic [ref=e772]:
+                            - listitem [ref=e774]:
+                              - generic [ref=e775]:
+                                - generic [ref=e776]: SIC Code
+                                - button "Edit SIC Code" [ref=e778] [cursor=pointer]:
+                                  - generic [ref=e780]: Edit SIC Code
+                            - listitem [ref=e782]:
+                              - generic [ref=e783]:
+                                - generic [ref=e784]: Primary
+                                - button "Edit Primary" [ref=e786] [cursor=pointer]:
+                                  - generic [ref=e788]: Edit Primary
+                          - listitem [ref=e792]:
+                            - generic [ref=e793]:
+                              - generic [ref=e794]: Number of Locations
+                              - button "Edit Number of Locations" [ref=e796] [cursor=pointer]:
+                                - generic [ref=e798]: Edit Number of Locations
+                      - list [ref=e803]:
+                        - generic [ref=e806]:
+                          - listitem [ref=e808]:
+                            - generic [ref=e809]:
+                              - generic [ref=e810]: Created By
+                              - generic [ref=e814]:
+                                - generic [ref=e820]:
+                                  - link "Carlos Ng" [ref=e821] [cursor=pointer]:
+                                    - /url: /lightning/r/User/005g5000008nNjdAAE/view
+                                    - generic [ref=e825]: Carlos Ng
+                                  - button "Preview" [ref=e827] [cursor=pointer]:
+                                    - img [ref=e829]
+                                    - generic [ref=e832]: Preview
+                                - text: ", 6/28/2026, 8:31 AM"
+                          - listitem [ref=e834]:
+                            - generic [ref=e835]:
+                              - generic [ref=e836]: Last Modified By
+                              - generic [ref=e840]:
+                                - generic [ref=e846]:
+                                  - link "Carlos Ng" [ref=e847] [cursor=pointer]:
+                                    - /url: /lightning/r/User/005g5000008nNjdAAE/view
+                                    - generic [ref=e851]: Carlos Ng
+                                  - button "Preview" [ref=e853] [cursor=pointer]:
+                                    - img [ref=e855]
+                                    - generic [ref=e858]: Preview
+                                - text: ", 6/28/2026, 8:31 AM"
+                      - list [ref=e862]:
+                        - listitem [ref=e867]:
+                          - generic [ref=e868]:
+                            - generic [ref=e869]: Description
+                            - button "Edit Description" [ref=e871] [cursor=pointer]:
+                              - generic [ref=e873]: Edit Description
+            - generic [ref=e879]:
+              - heading "Tabs" [level=2] [ref=e880]
+              - generic "Tabs" [ref=e881]:
+                - generic [ref=e882]:
+                  - heading "Tabs" [level=2] [ref=e883]
+                  - tablist "Tabs" [ref=e885]:
+                    - tab "Related" [selected] [ref=e886] [cursor=pointer]
+                  - tabpanel "Related" [ref=e889]:
+                    - generic [ref=e890]:
+                      - article [ref=e895]:
+                        - generic [ref=e897]:
+                          - img [ref=e902]
+                          - generic "We found no potential duplicates of this Lead." [ref=e906]
+                      - article "Campaign History" [ref=e918]:
+                        - generic [ref=e919]:
+                          - heading "Campaign History (0)" [level=2] [ref=e925]:
+                            - link "Campaign History (0)" [ref=e926] [cursor=pointer]:
+                              - /url: /lightning/r/Lead/00Qg5000005MRMrEAO/related/CampaignMembers/view
+                              - generic "Campaign History" [ref=e927]
+                              - generic "(0)" [ref=e928]
+                          - button "Show actions for Campaign History" [ref=e932] [cursor=pointer]:
+                            - generic [ref=e934]:
+                              - img [ref=e936]
+                              - generic [ref=e939]: Show actions for Campaign History
+    - generic:
+      - contentinfo "Utility Bar":
+        - list [ref=e943]:
+          - listitem [ref=e944]:
+            - button "To Do List" [ref=e947] [cursor=pointer]:
+              - img [ref=e951]
+              - generic [ref=e954]: To Do List
+  - status [ref=e956]: Success notification..Lead "Dr. Cornell Breitenberg" was saved. Press Control + F6 to navigate to the next toast notification or focusable region.
 ```
 
 # Test source
 
 ```ts
-  104 |     await this.textFieldAnnualRevenue.fill(lead.annualRevenue);
-  105 |     await this.textFieldPhone.fill(lead.phone);
-  106 |     await this.textFieldMobile.fill(lead.mobile);
-  107 |     await this.textFieldFax.fill(lead.fax);
-  108 |     await this.textFieldEmail.fill(lead.email);
-  109 |     await this.textFieldWebsite.fill(lead.website);
-  110 |     await this.textFieldNoOfEmployees.fill(lead.numberOfEmployees);
-  111 | 
-  112 |     await this.fillLeadFormDropdownV2(lead);
-  113 |   }
-  114 | 
-  115 |   async fillLeadTextField(field: Locator, value: string) {
-  116 |     await field.fill(value);
-  117 |   }
-  118 | 
-  119 |   async fillLeadFormDropdown(lead: LeadData) {
-  120 |     await this.dropdownSalutation.click();
-  121 |     await this.page.getByRole("option", { name: lead.salutation }).click();
-  122 | 
-  123 |     await this.dropdownLeadSource.click();
-  124 |     await this.page.getByRole("option", { name: lead.leadSource }).click();
-  125 | 
   126 |     await this.dropdownIndustry.click();
   127 |     await this.page.getByRole("option", { name: lead.industry, exact: true }).click();
   128 | 
@@ -365,8 +548,7 @@ Call log:
   201 |     await expect(this.dropdownLeadStatus).toBeVisible({ timeout: 10000 });
   202 |     await this.selectOption(this.dropdownLeadStatus, newStatus);
   203 |     await this.buttonSave.click();
-> 204 |     await expect(this.page.getByText("was saved.")).toBeVisible();
-      |                                                     ^ Error: expect(locator).toBeVisible() failed
+  204 |     await expect(this.page.getByText("was saved.")).toBeVisible();
   205 |     await expect(this.page).toHaveURL(this.leadRecordUrl, {
   206 |       timeout: 10000,
   207 |     });
@@ -388,7 +570,8 @@ Call log:
   223 | 
   224 |   // Polls until the expected value appears within the locator's text
   225 |   private async assertFieldValue(locator: Locator, expected: string, timeout = 10000) {
-  226 |     await expect.poll(async () => this.getTextContent(locator), { timeout }).toContain(expected);
+> 226 |     await expect.poll(async () => this.getTextContent(locator), { timeout }).toContain(expected);
+      |                                                                              ^ Error: Test timeout of 120000ms exceeded
   227 |   }
   228 | 
   229 |   private async resolveFieldValueLocator(label: string, initialValue: Locator, expected: string) {
@@ -467,4 +650,26 @@ Call log:
   302 |     await this.verifyField("Email", lead.email);
   303 |     await this.verifyField("Website", lead.website);
   304 |     await this.verifyField("No. of Employees", lead.numberOfEmployees);
+  305 |     await this.verifyField("Lead Source", lead.leadSource);
+  306 |     await this.verifyField("Industry", lead.industry);
+  307 |     await this.verifyField("Lead Status", lead.leadStatus);
+  308 |     await this.verifyField("Rating", lead.rating);
+  309 |   }
+  310 | 
+  311 |   async verifyOpportunityAndAccountName(data: string) {
+  312 |     await this.verifyField("Opportunity Name", data);
+  313 |     await this.verifyField("Account Name", data.slice(0, -1));
+  314 |   }
+  315 | 
+  316 |   async verifyFieldHasValue(label: string) {
+  317 |     const labelLocator = this.page.getByText(label, { exact: true }).first();
+  318 |     await expect(labelLocator).toHaveCount(1, { timeout: 10000 });
+  319 | 
+  320 |     // Navigate to the field container associated with the label
+  321 |     const field = labelLocator.locator(
+  322 |       "xpath=ancestor::*[self::div or self::li or self::tr or self::section or self::article][1]"
+  323 |     );
+  324 | 
+  325 |     // Retrieve the displayed field value
+  326 |     const value = field.locator(".test-id__field-value").first();
 ```
