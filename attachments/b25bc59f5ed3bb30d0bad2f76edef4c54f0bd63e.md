@@ -12,198 +12,259 @@
 # Error details
 
 ```
-Test timeout of 90000ms exceeded.
+Test timeout of 120000ms exceeded.
 ```
 
 ```
 Error: expect(locator).toBeVisible() failed
 
-Locator: getByText('was created.')
+Locator:  getByText('was saved.')
 Expected: visible
-Timeout: 5000ms
-Error: element(s) not found
+Received: hidden
+Timeout:  5000ms
 
 Call log:
   - Expect "toBeVisible" with timeout 5000ms
-  - waiting for getByText('was created.')
+  - waiting for getByText('was saved.')
+    2 × locator resolved to <span data-aura-rendered-by="2270:0" data-aura-class="forceActionsText" class="toastMessage slds-text-heading--small forceActionsText">Lead "Ms. Roderick Ullrich" was saved.</span>
+      - unexpected value "hidden"
 
 ```
 
 ```yaml
-- dialog "New Lead":
-  - button "Cancel and close"
-  - heading "New Lead" [level=2]
-  - text: "* = Required Information"
-  - heading "Lead Information" [level=3]
-  - list:
-    - listitem: Lead Owner Carlos Ng
-    - listitem:
-      - button "Undo Phone"
-      - text: Phone
-      - textbox "Phone": "0281725928"
-    - listitem:
-      - button "Undo Name"
-      - group "Name required":
-        - text: Name Salutation
-        - combobox "Salutation": Dr.
-        - status
-        - text: First Name
-        - textbox "First Name": Deborah
-        - text: Last Name
-        - textbox "Last Name": Yundt
-    - listitem:
-      - button "Undo Mobile"
-      - text: Mobile
-      - textbox "Mobile": "09674172708"
-    - listitem:
-      - button "Undo Company"
-      - text: Company
-      - textbox "Company": Runolfsson and Sons
-    - listitem:
-      - button "Undo Fax"
-      - text: Fax
-      - textbox "Fax": "8719942441"
-    - listitem:
-      - button "Undo Title"
-      - text: Title
-      - textbox "Title": Future Quality Manager
-    - listitem:
-      - button "Undo Email"
-      - text: Email
-      - textbox "Email": deborah_yundt@yahoo.com
-    - listitem:
-      - button "Undo Lead Source"
-      - text: Lead Source
-      - combobox "Lead Source": Purchased List
-      - status
-    - listitem:
-      - button "Undo Website"
-      - text: Website
-      - textbox "Website": https://hollow-petticoat.net/
-    - listitem:
-      - button "Undo Industry"
-      - text: Industry
-      - combobox "Industry": Agriculture
-      - status
-    - listitem:
-      - button "Undo Lead Status"
-      - text: "*Lead Status"
-      - combobox "Lead Status": Working - Contacted
-      - status
-    - listitem:
-      - button "Undo Annual Revenue"
-      - text: Annual Revenue
-      - spinbutton "Annual Revenue": $578
-    - listitem:
-      - button "Undo Rating"
-      - text: Rating
-      - combobox "Rating": Hot
-      - status
-    - listitem:
-      - button "Undo No. of Employees"
-      - text: No. of Employees
-      - spinbutton "No. of Employees": "838"
-  - heading "Address Information" [level=3]
+- link "Skip to Navigation":
+  - /url: javascript:void(0);
+- link "Skip to Main Content":
+  - /url: javascript:void(0);
+- button "Toggle Panel": Menu
+- text: Developer Edition
+- button "Show menu"
+- button "Search": Search...
+- navigation "Global Header":
   - list:
     - listitem:
-      - group "Address":
-        - text: Address Country
-        - combobox "Country": "--None--"
-        - status
-        - text: Street
-        - textbox "Street"
-        - status
-        - text: City
-        - textbox "City"
-        - text: State/Province
-        - combobox "State/Province": "--None--"
-        - status
-        - text: Zip/Postal Code
-        - textbox "Zip/Postal Code"
-  - heading "Additional Information" [level=3]
+      - group:
+        - button "Add favorite":
+          - tooltip "Add favorite"
+        - button "Favorites list":
+          - tooltip "Favorites list"
+    - listitem:
+      - button "Global Actions":
+        - tooltip "Global Actions"
+    - listitem:
+      - button "Guidance Center":
+        - tooltip "Guidance Center"
+    - listitem:
+      - button "Salesforce Help":
+        - tooltip "Salesforce Help"
+    - listitem:
+      - button "Setup":
+        - tooltip "Setup"
+    - listitem:
+      - button "Notifications":
+        - tooltip "Notifications"
+    - listitem:
+      - button "View profile":
+        - tooltip "View profile"
+- navigation "App":
+  - button "App Launcher"
+- heading "Sales" [level=1]
+- navigation "Global":
   - list:
     - listitem:
-      - text: Product Interest
-      - combobox "Product Interest": "--None--"
-      - status
+      - link "Home":
+        - /url: /lightning/page/home
     - listitem:
-      - text: Current Generator(s)
-      - textbox "Current Generator(s)"
+      - link "Opportunities":
+        - /url: /lightning/o/Opportunity/home
+      - button "Opportunities List"
     - listitem:
-      - text: SIC Code
-      - textbox "SIC Code"
+      - link "Leads":
+        - /url: /lightning/o/Lead/home
+      - button "Leads List"
     - listitem:
-      - text: Primary
-      - combobox "Primary": "--None--"
-      - status
+      - link "Tasks":
+        - /url: /lightning/o/Task/home
+      - button "Tasks List"
     - listitem:
-      - text: Number of Locations
-      - spinbutton "Number of Locations"
-  - heading "Description Information" [level=3]
+      - link "Files":
+        - /url: /lightning/o/ContentDocument/home
+      - button "Files List"
+    - listitem:
+      - link "Accounts":
+        - /url: /lightning/o/Account/home
+      - button "Accounts List"
+    - listitem:
+      - link "Contacts":
+        - /url: /lightning/o/Contact/home
+      - button "Contacts List"
+    - listitem:
+      - link "Campaigns":
+        - /url: /lightning/o/Campaign/home
+      - button "Campaigns List"
+    - listitem:
+      - link "Dashboards":
+        - /url: /lightning/o/Dashboard/home
+      - button "Dashboards List"
+    - listitem:
+      - button "Show more navigation items"
+    - listitem:
+      - button "Edit nav items"
+- main:
+  - heading "Lead Ms. Roderick Ullrich" [level=1]
+  - button "Follow"
+  - button "New Case"
+  - button "New Note"
+  - button "Submit for Approval"
+  - button "Show more actions"
+  - paragraph: Title
+  - paragraph: Lead Operations Agent
+  - paragraph: Company
+  - paragraph: Blick - Luettgen
+  - button "Phone (2)":
+    - paragraph: Phone (2)
+  - list:
+    - paragraph:
+      - link "(025) 833-2165":
+        - /url: tel:0258332165
+  - paragraph: Email
+  - paragraph:
+    - link "roderick.ullrich78@hotmail.com":
+      - /url: mailto:roderick.ullrich78@hotmail.com
+  - article:
+    - heading "Path" [level=2]
+    - listbox "Path Options":
+      - option "stage complete Open - Not Contacted"
+      - option "stage complete Working - Contacted"
+      - option "stage complete Closed - Not Converted"
+      - option "Closed - Converted" [selected]
+    - button "Change Converted Status"
+  - heading "Tabs" [level=2]
+  - heading "Tabs" [level=2]
+  - tablist "Tabs":
+    - tab "Activity"
+    - tab "Details" [selected]
+    - tab "Chatter"
+  - tabpanel "Details":
+    - list:
+      - listitem:
+        - text: Lead Owner
+        - link "Carlos Ng":
+          - /url: /lightning/r/Name/005g5000008nNjdAAE/view
+        - button "Preview"
+        - button "Change Owner"
+      - listitem:
+        - text: Phone
+        - link "(025) 833-2165":
+          - /url: tel:0258332165
+        - button "Edit Phone"
+      - listitem:
+        - text: Name Ms. Roderick Ullrich
+        - button "Edit Name"
+      - listitem:
+        - text: Mobile
+        - link "09279758540":
+          - /url: tel:09279758540
+        - button "Edit Mobile"
+      - listitem:
+        - text: Company Blick - Luettgen
+        - button "Edit Company"
+      - listitem:
+        - text: Fax
+        - link "(811) 167-3874":
+          - /url: tel:8111673874
+        - button "Edit Fax"
+      - listitem:
+        - text: Title Lead Operations Agent
+        - button "Edit Title"
+      - listitem:
+        - text: Email
+        - link "roderick.ullrich78@hotmail.com":
+          - /url: mailto:roderick.ullrich78@hotmail.com
+        - button "Edit Email"
+      - listitem:
+        - text: Lead Source Partner Referral
+        - button "Edit Lead Source"
+      - listitem:
+        - text: Website
+        - link "https://infinite-louse.org/":
+          - /url: https://infinite-louse.org/
+        - button "Edit Website"
+      - listitem:
+        - text: Industry Retail
+        - button "Edit Industry"
+      - listitem:
+        - text: Lead Status Closed - Converted
+        - button "Edit Lead Status"
+      - listitem:
+        - text: Annual Revenue $959
+        - button "Edit Annual Revenue"
+      - listitem:
+        - text: Rating Hot
+        - button "Edit Rating"
+      - listitem:
+        - text: No. of Employees 688
+        - button "Edit No. of Employees"
+    - list:
+      - listitem:
+        - text: Address
+        - button "Edit Address"
+    - list:
+      - listitem:
+        - text: Product Interest
+        - button "Edit Product Interest"
+      - listitem:
+        - text: Current Generator(s)
+        - button "Edit Current Generator(s)"
+      - listitem:
+        - text: SIC Code
+        - button "Edit SIC Code"
+      - listitem:
+        - text: Primary
+        - button "Edit Primary"
+      - listitem:
+        - text: Number of Locations
+        - button "Edit Number of Locations"
+    - list:
+      - listitem:
+        - text: Created By
+        - link "Carlos Ng":
+          - /url: /lightning/r/User/005g5000008nNjdAAE/view
+        - button "Preview"
+        - text: ", 6/28/2026, 7:57 AM"
+      - listitem:
+        - text: Last Modified By
+        - link "Carlos Ng":
+          - /url: /lightning/r/User/005g5000008nNjdAAE/view
+        - button "Preview"
+        - text: ", 6/28/2026, 7:57 AM"
+    - list:
+      - listitem:
+        - text: Description
+        - button "Edit Description"
+  - heading "Tabs" [level=2]
+  - heading "Tabs" [level=2]
+  - tablist "Tabs":
+    - tab "Related" [selected]
+  - tabpanel "Related":
+    - article: We found no potential duplicates of this Lead.
+    - article "Campaign History":
+      - heading "Campaign History (0)" [level=2]:
+        - link "Campaign History (0)":
+          - /url: /lightning/r/Lead/00Qg5000005MOqPEAW/related/CampaignMembers/view
+      - button "Show actions for Campaign History"
+- contentinfo "Utility Bar":
   - list:
     - listitem:
-      - text: Description
-      - textbox "Description"
-      - status
-  - button "Cancel" [disabled]
-  - button "Save & New" [disabled]
-  - button "Save" [disabled]
-  - status
-- alert:
-  - status: Loading...
+      - button "To Do List"
+- text: Success notification. Lead "Ms. Roderick Ullrich" was saved. Press Control + F6 to navigate to the next toast notification or focusable region.
+- button "Close"
 - status
 ```
 
 # Test source
 
 ```ts
-  57  |     this.textFieldAnnualRevenue = this.page.getByRole("spinbutton", { name: "Annual Revenue" });
-  58  |     this.textFieldPhone = this.page.getByRole("textbox", { name: "Phone" });
-  59  |     this.textFieldMobile = this.page.getByRole("textbox", { name: "Mobile" });
-  60  |     this.textFieldFax = this.page.getByRole("textbox", { name: "Fax" });
-  61  |     this.textFieldEmail = this.page.getByRole("textbox", { name: "Email" });
-  62  |     this.textFieldWebsite = this.page.getByRole("textbox", { name: "Website" });
-  63  |     this.dropdownLeadStatus = this.page.getByRole("combobox", { name: "Lead Status" });
-  64  |     this.dropdownRating = this.page.getByRole("combobox", { name: "Rating" });
-  65  |     this.textFieldNoOfEmployees = this.page.getByRole("spinbutton", { name: "No. of Employees" });
-  66  |     this.buttonSave = this.page.getByRole("button", { name: "Save", exact: true });
-  67  |     this.buttonShowMoreActions = this.page.getByRole("button", { name: "Show more actions" });
-  68  |     this.buttonDelete = this.page.getByRole("menuitem", { name: "Delete" });
-  69  |     this.buttonDelete2 = this.page.locator(
-  70  |       "//span[@dir='ltr' and contains(@class, 'label') and normalize-space(.)='Delete']"
-  71  |     );
-  72  |     this.tabDetails = this.page.getByRole("tab", { name: "Details" });
-  73  |     this.buttonEdit = this.page.getByRole("menuitem", { name: "Edit" });
-  74  |     this.buttonSaveAndNew = this.page.getByRole("button", { name: "Save & New" });
-  75  |     this.buttonConvertMenuItem = this.page.getByRole("menuitem", { name: "Convert" });
-  76  |     this.buttonConvert = this.page.getByRole("button", { name: "Convert" });
-  77  |     this.buttonError = this.page.getByRole("button", { name: "Error" });
-  78  |     this.buttonClose = this.page.locator(`button[title='Cancel and close']`);
-  79  |   }
-  80  | 
-  81  |   async verifyDashboardPage() {
-  82  |     await expect(this.textFieldGlobalSearchBar).toBeVisible();
-  83  |     await expect(this.buttonAppLauncher).toBeVisible();
-  84  |   }
-  85  | 
-  86  |   async goToSalesPage() {
-  87  |     await this.page.goto(
-  88  |       "https://orgfarm-b21abd5166-dev-ed.develop.lightning.force.com/lightning/n/devedapp__Welcome"
-  89  |     );
-  90  |     await this.page.waitForLoadState("domcontentloaded");
-  91  |   }
-  92  | 
-  93  |   async clickNewButton() {
-  94  |     await this.buttonNew.click({ timeout: 10000 });
-  95  |     await expect(this.page.getByText("New Lead", { exact: true })).toBeVisible({ timeout: 10000 });
-  96  |     await this.h.pause(1000);
-  97  |   }
-  98  | 
-  99  |   async fillLeadForm(lead: LeadData) {
-  100 |     await this.textFieldFirstName.fill(lead.firstName);
-  101 |     await this.textFieldLastName.fill(lead.lastName);
-  102 |     await this.textFieldCompany.fill(lead.company);
-  103 |     await this.textFieldTitle.fill(lead.title);
   104 |     await this.textFieldAnnualRevenue.fill(lead.annualRevenue);
   105 |     await this.textFieldPhone.fill(lead.phone);
   106 |     await this.textFieldMobile.fill(lead.mobile);
@@ -257,8 +318,7 @@ Call log:
   154 | 
   155 |   async saveLead() {
   156 |     await this.buttonSave.click();
-> 157 |     await expect(this.page.getByText("was created.")).toBeVisible();
-      |                                                       ^ Error: expect(locator).toBeVisible() failed
+  157 |     await expect(this.page.getByText("was created.")).toBeVisible();
   158 |     await expect(this.page).toHaveURL(this.leadRecordUrl, {
   159 |       timeout: 10000,
   160 |     });
@@ -305,7 +365,8 @@ Call log:
   201 |     await expect(this.dropdownLeadStatus).toBeVisible({ timeout: 10000 });
   202 |     await this.selectOption(this.dropdownLeadStatus, newStatus);
   203 |     await this.buttonSave.click();
-  204 |     await expect(this.page.getByText("was saved.")).toBeVisible();
+> 204 |     await expect(this.page.getByText("was saved.")).toBeVisible();
+      |                                                     ^ Error: expect(locator).toBeVisible() failed
   205 |     await expect(this.page).toHaveURL(this.leadRecordUrl, {
   206 |       timeout: 10000,
   207 |     });
@@ -359,4 +420,51 @@ Call log:
   255 |       if (await fallbackValue.count()) {
   256 |         return fallbackValue.first();
   257 |       }
+  258 |     }
+  259 | 
+  260 |     return this.page.locator("body");
+  261 |   }
+  262 | 
+  263 |   /**
+  264 |    * Verifies the displayed value of a Salesforce record field based on its label.
+  265 |    * Optionally normalizes numeric values (e.g. Phone, Mobile, Fax) to ignore
+  266 |    * formatting differences such as spaces, parentheses, or dashes.
+  267 |    */
+  268 |   async verifyField(label: string, expected: string, normalizeDigits = false) {
+  269 |     const field = this.page
+  270 |       .locator(`.test-id__field-label:text-is("${label}")`)
+  271 |       .locator(
+  272 |         "xpath=ancestor::*[contains(concat(' ', normalize-space(@class), ' '), ' slds-form-element ')][1]"
+  273 |       );
+  274 | 
+  275 |     // Retrieve the displayed field value
+  276 |     const value = field.locator(".test-id__field-value").first();
+  277 |     const resolvedValue = await this.resolveFieldValueLocator(label, value, expected);
+  278 | 
+  279 |     // Compare only numeric characters for phone-related fields
+  280 |     if (normalizeDigits) {
+  281 |       await expect
+  282 |         .poll(async () => (await this.getTextContent(resolvedValue)).replace(/\D/g, ""), {
+  283 |           timeout: 10000,
+  284 |         })
+  285 |         .toContain(expected.replace(/\D/g, ""));
+  286 |       return;
+  287 |     }
+  288 | 
+  289 |     // Verify the displayed text matches the expected value
+  290 |     await this.assertFieldValue(resolvedValue, expected);
+  291 |   }
+  292 | 
+  293 |   async verifyDetailsView(lead: LeadData) {
+  294 |     const fullName = `${lead.salutation} ${lead.firstName} ${lead.lastName}`;
+  295 |     await this.verifyField("Name", fullName);
+  296 |     await this.verifyField("Title", lead.title);
+  297 |     await this.verifyField("Company", lead.company);
+  298 |     await this.verifyField("Annual Revenue", lead.annualRevenue);
+  299 |     await this.verifyField("Phone", lead.phone, true);
+  300 |     await this.verifyField("Mobile", lead.mobile, true);
+  301 |     await this.verifyField("Fax", lead.fax, true);
+  302 |     await this.verifyField("Email", lead.email);
+  303 |     await this.verifyField("Website", lead.website);
+  304 |     await this.verifyField("No. of Employees", lead.numberOfEmployees);
 ```
