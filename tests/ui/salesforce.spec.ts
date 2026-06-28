@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../page-objects/loginPage";
-import { Helper } from "../page-objects/helper";
-import { SalesPage } from "../page-objects/salesPage";
-import { generateLeadData, leadStatus, randomDifferentValue } from "../utils/salesLeadsData";
+import { LoginPage } from "../../page-objects/loginPage";
+import { Helper } from "../../page-objects/helper";
+import { SalesPage } from "../../page-objects/salesPage";
+import { generateLeadData, leadStatus, randomDifferentValue } from "../../utils/salesLeadsData";
 
 test("Salesforce Login with OTP @runFirstLogin", async ({ page }) => {
   test.setTimeout(120000);

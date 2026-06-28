@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../page-objects/loginPage";
-import { Helper } from "../page-objects/helper";
-import { SalesPage } from "../page-objects/salesPage";
-import { generateLeadData } from "../utils/salesLeadsData";
+import { LoginPage } from "../../page-objects/loginPage";
+import { Helper } from "../../page-objects/helper";
+import { SalesPage } from "../../page-objects/salesPage";
+import { generateLeadData } from "../../utils/salesLeadsData";
 
 test(`Lead Creation with missing mandatory fields`, async ({ page }) => {
   test.setTimeout(60000);
