@@ -4,6 +4,32 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Test tags to filter (optional, blank runs all tests)'
+        required: false
+        type: string
+      browser:
+        description: 'Browser project to run'
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - chromium
+          - firefox
+          - webkit
+      workers:
+        description: 'Number of parallel workers'
+        required: false
+        default: '4'
+        type: string
+      retries:
+        description: 'Number of retries for failed tests'
+        required: false
+        default: '1'
+        type: string
 jobs:
   test:
     timeout-minutes: 60
@@ -18,10 +44,23 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      env:
+        TAGS: ${{ github.event.inputs.tags || '' }}
+        BROWSER: ${{ github.event.inputs.browser || 'all' }}
+        WORKERS: ${{ github.event.inputs.workers || '4' }}
+        RETRIES: ${{ github.event.inputs.retries || '1' }}
+      run: |
+        ARGS=(--workers="$WORKERS" --retries="$RETRIES")
+        if [ -n "$TAGS" ]; then
+          ARGS+=(--grep="$TAGS")
+        fi
+        if [ "$BROWSER" != "all" ]; then
+          ARGS+=(--project="$BROWSER")
+        fi
+        npx playwright test "${ARGS[@]}"
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: playwright-report
-        path: playwright-report/
+        name: monocart-report
+        path: monocart-report/
         retention-days: 30
