@@ -34,6 +34,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -64,3 +66,16 @@ jobs:
         name: monocart-report
         path: monocart-report/
         retention-days: 30
+    - name: Prepare GitHub Pages deploy folder
+      if: always()
+      run: |
+        mkdir -p public
+        if [ -d monocart-report ]; then
+          cp -r monocart-report/. public/
+        fi
+    - name: Deploy Monocart report to GitHub Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
