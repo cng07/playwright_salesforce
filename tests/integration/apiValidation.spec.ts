@@ -4,6 +4,17 @@ import { Helper } from "../../page-objects/helper";
 import { SalesPage } from "../../page-objects/salesPage";
 import { generateLeadData } from "../../utils/salesLeadsData";
 
+type ConvertLeadAuraResponse = {
+  actions: Array<{
+    state: string;
+    returnValue: {
+      hasError: boolean;
+      opportunityId: string;
+      accountId: string;
+    };
+  }>;
+};
+
 test(`API / Response Validation`, async ({ page }) => {
   test.setTimeout(90000);
   const _pageLogin = new LoginPage(page);
@@ -37,7 +48,27 @@ test(`API / Response Validation`, async ({ page }) => {
   await _page.convertLeadRadio("Create New Account");
   await _page.convertLeadRadio("Create New Opportunity");
   const opportunityName = await _page.getConvertLeadTextInputValue("Opportunity Name");
+
+  const convertLeadResponsePromise = page.waitForResponse(
+    (response) =>
+      response.url().includes("lightning.force.com/aura") &&
+      response.url().includes("convertLeadServer")
+  );
   await _page.clickConvertButtonOnConvertLeadModule();
+  const convertLeadResponse = await convertLeadResponsePromise;
+
+  expect(convertLeadResponse.status()).toBe(200);
+  const convertLeadBody = (await convertLeadResponse.json()) as ConvertLeadAuraResponse;
+  const { state, returnValue } = convertLeadBody.actions[0];
+
+  expect(state).toBe("SUCCESS");
+  expect(returnValue.hasError).toBe(false);
+  expect(returnValue.opportunityId).toBeDefined();
+  expect(returnValue.opportunityId).not.toBe("");
+  expect(returnValue.accountId).toBeDefined();
+  expect(returnValue.accountId).not.toBe("");
+
+  const opportunityId = returnValue.opportunityId;
 
   // Validate Opportunity created successfully
   // Navigate to the newly created Opportunity page
