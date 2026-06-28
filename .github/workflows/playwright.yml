@@ -57,7 +57,7 @@ jobs:
         if [ "$BROWSER" != "all" ]; then
           ARGS+=(--project="$BROWSER")
         fi
-        npx playwright test "${ARGS[@]}"
+        npm run test -- "${ARGS[@]}"
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:

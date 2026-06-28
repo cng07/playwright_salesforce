@@ -16,14 +16,16 @@ dotenv.config();
  */
 export default defineConfig({
   testDir: "./tests",
+  grepInvert:
+    process.env.CI || process.env.USE_STORAGE_STATE === "true" ? /@runFirstLogin/ : undefined,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 1,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 3 : 5,
+  workers: process.env.CI ? 4 : 5,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     // ["html", { open: "never" }],
@@ -47,7 +49,8 @@ export default defineConfig({
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
-    storageState: "playwright/.auth/storageState.json",
+    storageState:
+      process.env.USE_STORAGE_STATE === "false" ? undefined : "playwright/.auth/storageState.json",
   },
 
   /* Configure projects for major browsers */

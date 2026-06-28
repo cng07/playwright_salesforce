@@ -6,7 +6,9 @@
   "scripts": {
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "test:smoke": "playwright test --project=chromium --project=webkit --grep @smoke"
+    "test": "cross-env USE_STORAGE_STATE=true playwright test",
+    "test:setupLogin": "cross-env USE_STORAGE_STATE=false playwright test --grep @runFirstLogin --project=chromium",
+    "test:smoke": "cross-env USE_STORAGE_STATE=true playwright test --project=chromium --project=webkit --grep @smoke"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
   "devDependencies": {
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.0.1",
+    "cross-env": "^7.0.3",
     "monocart-reporter": "^2.12.1",
     "prettier": "^3.8.4"
   },
